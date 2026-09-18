@@ -1,0 +1,246 @@
+Q:
+cool i like this
+now i am going to make this site first my site will be static and its on github.io what i should use for codeing this ( can i use framworks)
+
+A:
+Yes — you can absolutely use a framework on GitHub Pages. The important thing is that the framework can produce **static HTML/CSS/JS files** at build time.
+
+For the comic-style résumé you described, I’d use **Astro + a little React + GSAP**.
+
+Astro is especially nice here because your site is mostly content — résumé sections, illustrations, project cards — but you still want selected parts to be highly interactive.
+
+### Stack I’d choose
+
+| Part                   | Technology               | Why                                                   |
+| ---------------------- | ------------------------ | ----------------------------------------------------- |
+| Main framework         | **Astro**                | Excellent for static portfolio sites                  |
+| Styling                | **CSS / SCSS**           | Gives you precise comic-panel layouts                 |
+| Layout                 | **CSS Grid**             | Perfect for irregular 1×1, 2×1, 1×2, 2×2 comic panels |
+| Interactive components | **React**                | Only where needed                                     |
+| Scroll animation       | **GSAP + ScrollTrigger** | Great for your changing experience illustrations      |
+| Icons                  | Lucide Icons             | Clean/simple                                          |
+| Hosting                | GitHub Pages             | Free and perfect for this                             |
+| Deployment             | GitHub Actions           | Automatically rebuilds when you push                  |
+
+You could build almost everything in Astro without React. React would only be useful for things like an interactive project gallery, experience slider, mobile navigation, theme switcher, etc.
+
+For example, your page could be structured roughly like this:
+
+```text
+src/
+├── components/
+│   ├── ComicPanel.astro
+│   ├── SpeechBubble.astro
+│   ├── Sidebar.astro
+│   ├── SkillCard.astro
+│   ├── ProjectCard.astro
+│   └── ExperienceStory.jsx
+│
+├── sections/
+│   ├── Hero.astro
+│   ├── About.astro
+│   ├── Skills.astro
+│   ├── Experience.astro
+│   ├── Projects.astro
+│   ├── Education.astro
+│   └── Contact.astro
+│
+├── layouts/
+│   └── Layout.astro
+│
+├── styles/
+│   ├── global.css
+│   ├── comic.css
+│   └── fonts.css
+│
+└── pages/
+    └── index.astro
+
+public/
+├── images/
+│   ├── hero/
+│   ├── experience/
+│   ├── projects/
+│   └── backgrounds/
+└── textures/
+```
+
+The irregular comic layout you mentioned is very easy with CSS Grid. Instead of forcing everything into equal cards, you can define panels like:
+
+```css
+.comic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 220px;
+  gap: 12px;
+}
+
+.hero {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+
+.intro {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+
+.skills {
+  grid-column: span 2;
+}
+
+.project {
+  grid-column: span 1;
+}
+
+.experience {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+```
+
+That gives you exactly the kind of intentionally uneven comic-book composition you were describing.
+
+### Your Experience section could be especially cool
+
+I wouldn't make Experience a normal résumé list.
+
+Instead, make it a **scrolling story**.
+
+Imagine the left side stays fixed:
+
+```text
+┌──────────────────────┬─────────────────────────┐
+│                      │                         │
+│    COMIC IMAGE       │ Technical Lead          │
+│                      │ Roshan                  │
+│                      │                         │
+│                      │ Architecting LLM        │
+│                      │ systems...              │
+│                      │                         │
+├──────────────────────┼─────────────────────────┤
+│                      │ Real-time AI            │
+│ IMAGE CHANGES        │                         │
+│                      │ LiveKit voice AI...     │
+│                      │                         │
+├──────────────────────┼─────────────────────────┤
+│                      │ Enterprise RAG          │
+│ IMAGE CHANGES        │                         │
+│                      │ PDFs / Docs / Audio...  │
+└──────────────────────┴─────────────────────────┘
+```
+
+The illustration can stay `position: sticky`, while the résumé story scrolls beside it.
+
+As each text chapter becomes active:
+
+```text
+Chapter 1
+Technical Lead
+→ image: you drawing AI architecture on whiteboard
+
+Chapter 2
+LLM Infrastructure
+→ image: server room / GPUs / models
+
+Chapter 3
+Voice AI
+→ image: headphones + waveform + AI assistant
+
+Chapter 4
+RAG
+→ image: documents flying into a knowledge system
+
+Chapter 5
+OCR
+→ image: Persian documents being scanned
+
+Chapter 6
+Model Optimization
+→ image: GPU / speed / benchmark scene
+```
+
+GSAP ScrollTrigger can switch the artwork as the visitor moves between chapters:
+
+```js
+ScrollTrigger.create({
+  trigger: section,
+  start: "top center",
+  onEnter: () => changeImage(index),
+  onEnterBack: () => changeImage(index)
+});
+```
+
+That would make the résumé feel much more like someone is **reading your career as a graphic novel** rather than reading a PDF.
+
+I also wouldn't show all the résumé bullet points exactly as they appear in the CV. Your résumé is fairly technical, with things like LLM inference, RAG, OCR, model optimization, TensorRT, Triton, LiveKit, document layout analysis, etc.  The site can turn those into short visual chapters while still giving visitors a button to open/download the full résumé.
+
+For example, instead of:
+
+> Architected LLM inference pipelines across diverse hardware architectures...
+
+the site could show:
+
+**ARCHITECT → OPTIMIZE → DEPLOY**
+
+Then underneath:
+
+> Running LLMs efficiently across different hardware using vLLM, llama.cpp and OpenVINO.
+
+And your illustration tells the rest of the story.
+
+### I would not use Next.js for this
+
+You *can*, but for this project it's unnecessary complexity.
+
+I'd rank the choices like this for your particular site:
+
+**Astro → best fit**
+
+**Vite + React → also very good**
+
+**Plain HTML/CSS/JS → possible, but the project will become harder to organize**
+
+**Next.js → overkill unless you later add server functionality**
+
+Because your GitHub Pages site is static, Astro can build everything into something like:
+
+```text
+dist/
+├── index.html
+├── assets/
+├── images/
+└── css/
+```
+
+GitHub Pages just serves those files.
+
+One important detail: if your repo is:
+
+```text
+ali79hm.github.io
+```
+
+your site can simply be:
+
+```text
+https://ali79hm.github.io
+```
+
+If the repo is instead something like:
+
+```text
+portfolio
+```
+
+then it becomes:
+
+```text
+https://ali79hm.github.io/portfolio/
+```
+
+and you'll need to configure the site's base path accordingly.
+
+For your design specifically, I'd build it as **Astro + CSS Grid + GSAP**, and use React only when an individual component genuinely needs it. That keeps it very fast while still letting us make the experience section, project panels, navigation, image transitions, hover effects, page transitions, speech bubbles, and comic interactions quite elaborate.
+
+The next useful step would be to define the **actual page layout from your résumé** — panel by panel — before writing code: which sections occupy 3 columns, which are tall panels, where the sticky experience sequence goes, what illustrations are needed, and how desktop/mobile layouts change.

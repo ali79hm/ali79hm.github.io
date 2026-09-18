@@ -1,0 +1,802 @@
+Q:
+ok lets sey i want to make this happen with codex tell me for each part should i use jpg image with text on should i make each part svg how i will do that
+
+A:
+Yes. The key decision is: **do not make the website itself as one giant comic image.** Build the layout and all résumé text with HTML/CSS, and use images only for the illustrated scenes.
+
+That gives you the comic look while keeping the site responsive, searchable, selectable, accessible, and easy to update.
+
+### What should be image vs HTML vs SVG?
+
+| Part                          | Use                   | Example                                   |
+| ----------------------------- | --------------------- | ----------------------------------------- |
+| Your comic character / scenes | **WebP/AVIF image**   | You at computer, whiteboard, Tehran scene |
+| Text                          | **HTML**              | Name, experience, skills, descriptions    |
+| Headings                      | **HTML + comic font** | `EXPERIENCE`, `SKILLS`                    |
+| Speech bubbles                | **CSS + HTML text**   | Bubble around `"I build AI systems..."`   |
+| Panel borders                 | **CSS**               | Thick black comic borders                 |
+| Buttons                       | **HTML/CSS**          | `VIEW DETAILS →`                          |
+| Icons                         | **SVG**               | GitHub, LinkedIn, AI, server, database    |
+| Halftone texture              | CSS / small SVG / PNG | comic dots                                |
+| Arrows and doodles            | SVG                   | hand-drawn arrows                         |
+| Timeline                      | CSS                   | vertical line + dots                      |
+| Project screenshots           | WebP/PNG              | Jalali calendar screenshot                |
+| Background illustrations      | WebP/AVIF             | Tehran skyline                            |
+| Logos                         | SVG when available    | GitHub, LinkedIn, KDE                     |
+
+So instead of generating this:
+
+```text
+┌─────────────────────────────┐
+│ [an entire JPG containing]  │
+│                             │
+│ EXPERIENCE                  │
+│ Technical Lead              │
+│ Roshan                      │
+│ March 2025 - Present        │
+│                             │
+└─────────────────────────────┘
+```
+
+you build:
+
+```html
+<section class="comic-panel experience">
+  <img
+    src="/images/experience/tech-lead.webp"
+    alt=""
+  />
+
+  <div class="experience-content">
+    <h2>Technical Lead</h2>
+    <h3>Roshan</h3>
+    <p>March 2025 — Present</p>
+
+    <p>
+      Architecting enterprise AI systems,
+      LLM infrastructure and RAG platforms.
+    </p>
+
+    <a href="/experience/technical-lead">
+      View details →
+    </a>
+  </div>
+</section>
+```
+
+The picture gives the **comic atmosphere**. The website gives you the **actual content**.
+
+---
+
+## Your hero section
+
+For this part:
+
+```text
+┌──────────────────────────────────────┐
+│ HI, I'M            [comic scene]     │
+│ SEYED ALI                           │
+│ HOSSEINI                            │
+│                                     │
+│ Senior AI Engineer                  │
+│ buttons etc.                        │
+└──────────────────────────────────────┘
+```
+
+I would use **one large illustration without text**.
+
+For example:
+
+```text
+hero.webp
+```
+
+contains:
+
+* you sitting at your workstation
+* monitors
+* cat
+* plants
+* Tehran skyline
+* whiteboard
+* room
+
+But **NOT**:
+
+```text
+Hi I'm Seyed Ali Hosseini
+Senior AI Engineer
+```
+
+Those should be real HTML positioned over/beside it.
+
+Something like:
+
+```html
+<section class="hero comic-panel">
+
+  <div class="hero-text">
+    <div class="speech-bubble">
+      <h1>
+        Hi, I'm<br>
+        Seyed Ali<br>
+        Hosseini
+      </h1>
+    </div>
+
+    <h2>Senior AI Engineer & Tech Lead</h2>
+
+    <p>Enterprise AI · LLMs · OCR · RAG</p>
+  </div>
+
+  <img
+    class="hero-art"
+    src="/images/hero/hero.webp"
+  />
+
+</section>
+```
+
+Then CSS Grid controls where everything goes.
+
+---
+
+## Speech bubbles
+
+Don't generate speech-bubble text into your illustrations either.
+
+Make a reusable component:
+
+```html
+<div class="speech-bubble">
+    I turn complex problems into real-world AI systems.
+</div>
+```
+
+CSS:
+
+```css
+.speech-bubble {
+  position: relative;
+
+  background: #fffdf6;
+
+  border: 4px solid #111;
+  border-radius: 22px;
+
+  padding: 20px;
+
+  font-family: var(--comic-font);
+}
+
+.speech-bubble::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -24px;
+  left: 40px;
+
+  border-width: 24px 20px 0;
+  border-style: solid;
+
+  border-color:
+    #111
+    transparent
+    transparent;
+}
+```
+
+Then you can change the words whenever you want.
+
+---
+
+# Your Skills section
+
+This one should be almost entirely HTML/CSS/SVG.
+
+For example:
+
+```text
+┌───────────────┐
+│ 🧠            │
+│ LLMs & AI     │
+│               │
+│ vLLM          │
+│ RAG           │
+│ Quantization  │
+└───────────────┘
+```
+
+The brain icon could be SVG.
+
+Everything else is HTML.
+
+```astro
+<SkillCard
+    icon="brain"
+    title="LLMs & AI Systems"
+    skills={[
+        "Inference",
+        "Optimization",
+        "Deployment",
+        "Quantization",
+        "RAG",
+        "Voice AI"
+    ]}
+/>
+```
+
+Then Codex can generate five cards from data instead of hardcoding them individually.
+
+---
+
+# Projects section
+
+Here you should use real screenshots.
+
+For example:
+
+```text
+project-jalali.webp
+```
+
+Then:
+
+```html
+<article class="project comic-panel">
+
+    <img
+      src="/images/projects/jalali.webp"
+      alt="Jalali Calendar KDE widget"
+    >
+
+    <h3>KDE Jalali Calendar Widget</h3>
+
+    <div class="tags">
+       <span>JavaScript</span>
+       <span>QML</span>
+       <span>Python</span>
+    </div>
+
+    <p>
+       Open-source KDE Plasma widget...
+    </p>
+
+    <a href="...">
+       View project →
+    </a>
+
+</article>
+```
+
+This is much better than putting project names inside the screenshot.
+
+---
+
+# Education
+
+Same idea.
+
+Generate:
+
+```text
+shahed-university-comic.webp
+```
+
+containing only the illustrated building.
+
+Then HTML:
+
+```html
+<h2>Education</h2>
+
+<h3>B.Sc. Computer Engineering</h3>
+
+<p>Shahed University</p>
+
+<p>2019 — 2023</p>
+
+<p>GPA: 17.31 / 20</p>
+```
+
+---
+
+# Your Experience section is different
+
+This is where I'd spend most of the effort.
+
+Instead of one image, create perhaps:
+
+```text
+experience/
+│
+├── lead-01.webp
+├── lead-02.webp
+├── lead-03.webp
+├── lead-04.webp
+├── lead-05.webp
+│
+├── engineer-01.webp
+├── engineer-02.webp
+├── engineer-03.webp
+├── engineer-04.webp
+└── engineer-05.webp
+```
+
+For Technical Lead, the images might be:
+
+```text
+01
+You drawing architecture
+DATA → LLM → APP
+
+02
+You working with GPU/server infrastructure
+
+03
+You working with voice AI/headphones/waveforms
+
+04
+Documents flowing into a RAG system
+
+05
+You leading/mentoring your engineering team
+```
+
+Then your website creates this:
+
+```text
+                 ┌───────────────┐
+                 │               │
+                 │ COMIC IMAGE   │
+                 │    STICKY     │
+                 │               │
+                 └───────────────┘
+
+Architecture     ← image 01
+
+      ↓ scroll
+
+LLM Deployment   ← image 02
+
+      ↓ scroll
+
+Voice AI         ← image 03
+
+      ↓ scroll
+
+RAG              ← image 04
+
+      ↓ scroll
+
+Leadership       ← image 05
+```
+
+This part gives the site that special feeling you described earlier.
+
+---
+
+# You don't necessarily need GSAP
+
+For version one, I might actually have Codex use:
+
+```js
+IntersectionObserver
+```
+
+It is built into the browser.
+
+Conceptually:
+
+```js
+const chapters =
+    document.querySelectorAll(".experience-chapter");
+
+const image =
+    document.querySelector(".experience-image");
+
+const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if (!entry.isIntersecting) return;
+
+        image.src = entry.target.dataset.image;
+
+    });
+
+}, {
+    threshold: 0.5
+});
+
+chapters.forEach(chapter => {
+    observer.observe(chapter);
+});
+```
+
+Then:
+
+```html
+<div
+ class="experience-chapter"
+ data-image="/images/experience/lead-01.webp"
+>
+   <h3>Architecture & Deployment</h3>
+   ...
+</div>
+```
+
+When it enters the screen:
+
+```text
+lead-01.webp
+```
+
+appears.
+
+Then:
+
+```text
+lead-02.webp
+```
+
+etc.
+
+You can later add GSAP to make transitions more sophisticated.
+
+---
+
+# The image can transition like a comic frame
+
+Don't instantly swap it.
+
+For example:
+
+```css
+.experience-image {
+    transition:
+      opacity 0.35s ease,
+      transform 0.45s ease;
+}
+```
+
+When changing:
+
+```text
+old image
+      ↓
+fade
+      ↓
+slightly zoom
+      ↓
+new comic panel
+```
+
+You could eventually make it look like:
+
+```text
+WHAM!
+```
+
+or:
+
+```text
+NEXT CHAPTER →
+```
+
+between major jobs.
+
+But keep the first version simpler.
+
+---
+
+# Desktop vs mobile
+
+Don't create separate artwork containing desktop/mobile layouts.
+
+The same HTML should rearrange itself.
+
+Desktop:
+
+```text
+┌────────────────────┬─────────────────────┐
+│                    │ Architecture        │
+│                    │                     │
+│   sticky comic     │ ↓                   │
+│      image         │                     │
+│                    │ Deployment          │
+│                    │                     │
+│                    │ ↓                   │
+│                    │                     │
+│                    │ Voice AI            │
+└────────────────────┴─────────────────────┘
+```
+
+Mobile:
+
+```text
+┌────────────────────────┐
+│                        │
+│      comic image       │
+│                        │
+├────────────────────────┤
+│ Architecture           │
+│ text...                │
+├────────────────────────┤
+│ Deployment             │
+│ text...                │
+├────────────────────────┤
+│ Voice AI               │
+│ text...                │
+└────────────────────────┘
+```
+
+CSS media queries handle that.
+
+---
+
+# For images: don't use JPG by default
+
+For your site I would mostly use:
+
+**WebP**.
+
+For example:
+
+```text
+hero.webp
+experience-lead-01.webp
+experience-lead-02.webp
+project-jalali.webp
+education.webp
+contact.webp
+```
+
+WebP is usually dramatically smaller than PNG while still looking very good.
+
+If transparency is needed:
+
+```text
+PNG
+```
+
+or transparent WebP.
+
+Use JPEG mainly for photographs.
+
+SVG should be used for **simple vector graphics**, not giant comic scenes.
+
+Good SVG candidates:
+
+```text
+brain.svg
+eye.svg
+server.svg
+database.svg
+github.svg
+linkedin.svg
+mail.svg
+arrow.svg
+scribble.svg
+starburst.svg
+```
+
+Bad SVG candidate:
+
+```text
+huge detailed comic illustration.svg
+```
+
+That can become enormous and difficult to maintain.
+
+---
+
+# I would organize your assets like this
+
+```text
+public/
+│
+├── images/
+│   │
+│   ├── hero/
+│   │   └── hero.webp
+│   │
+│   ├── about/
+│   │   └── tehran.webp
+│   │
+│   ├── experience/
+│   │   ├── lead-architecture.webp
+│   │   ├── lead-deployment.webp
+│   │   ├── lead-voice-ai.webp
+│   │   ├── lead-rag.webp
+│   │   ├── engineer-ocr.webp
+│   │   ├── engineer-training.webp
+│   │   └── engineer-optimization.webp
+│   │
+│   ├── projects/
+│   │   └── jalali-calendar.webp
+│   │
+│   └── education/
+│       └── shahed.webp
+│
+├── icons/
+│   ├── brain.svg
+│   ├── eye.svg
+│   ├── server.svg
+│   └── database.svg
+│
+└── textures/
+    ├── halftone.svg
+    └── paper.webp
+```
+
+That makes life much easier when Codex starts working on the project.
+
+---
+
+# And create reusable comic components
+
+I'd tell Codex to create components like:
+
+```text
+ComicPanel.astro
+ComicHeading.astro
+SpeechBubble.astro
+ComicButton.astro
+SkillCard.astro
+ProjectCard.astro
+ExperienceStory.astro
+ExperienceChapter.astro
+Sidebar.astro
+SocialLinks.astro
+```
+
+Then instead of manually duplicating this design everywhere:
+
+```html
+<div class="white-box">
+...
+</div>
+```
+
+you could write:
+
+```astro
+<ComicPanel>
+   ...
+</ComicPanel>
+```
+
+And all your panels automatically get:
+
+* thick ink border
+* small irregular rotation
+* paper texture
+* shadow
+* halftone effect
+* responsive behavior
+
+That will make the site feel consistent.
+
+---
+
+## One important trick: deliberately imperfect borders
+
+Normal CSS:
+
+```css
+border: 3px solid black;
+```
+
+will look very computer-perfect.
+
+Your comic should feel slightly irregular.
+
+For example:
+
+```css
+.comic-panel {
+  border: 3px solid #111;
+
+  border-radius:
+    3px 7px
+    4px 5px;
+
+  box-shadow:
+    4px 5px 0 #111;
+}
+```
+
+Some panels:
+
+```css
+transform: rotate(-0.3deg);
+```
+
+Others:
+
+```css
+transform: rotate(0.4deg);
+```
+
+Very small differences.
+
+That gives you a hand-built comic feeling without destroying readability.
+
+---
+
+# What I would tell Codex first
+
+Don't ask Codex to build everything in one giant prompt.
+
+Start with the foundation.
+
+You could give Codex this:
+
+```text
+Create an Astro static portfolio website for GitHub Pages.
+
+Design style:
+comic-book / graphic-novel portfolio.
+
+Architecture rules:
+
+- Astro
+- TypeScript
+- vanilla CSS
+- no backend
+- static output
+- responsive desktop/mobile
+- reusable components
+- do not put text inside images
+- all resume text must be HTML
+- illustrations are WebP images
+- icons/decorative graphics are SVG
+- use CSS Grid for irregular comic panel layouts
+- use thick comic borders
+- subtle halftone/paper texture
+- slightly irregular panel styling
+- responsive mobile layout
+
+Create these components:
+
+ComicPanel.astro
+ComicHeading.astro
+SpeechBubble.astro
+ComicButton.astro
+Sidebar.astro
+SkillCard.astro
+ProjectCard.astro
+ExperienceStory.astro
+ExperienceChapter.astro
+
+Create page sections:
+
+Hero
+About
+Skills
+Experience
+Projects
+Education
+Contact
+
+For Experience:
+use a sticky illustration on desktop.
+As the user scrolls through experience chapters,
+change the illustration using IntersectionObserver.
+
+On mobile:
+stack the image and text vertically.
+
+Use placeholder images from /public/images for now.
+
+Do not attempt to draw the comic illustrations using CSS.
+Create clean placeholder blocks where artwork will later be inserted.
+```
+
+That's a very good **phase 1**.
+
+Then we generate the actual illustrations separately and drop them into `/public/images`.
+
+That separation is important: **Codex builds the comic book; the generated images provide the artwork.** You don't want the generated artwork itself to *be* the website.

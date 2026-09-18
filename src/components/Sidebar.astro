@@ -1,0 +1,124 @@
+---
+import Icon from "./Icon.astro";
+const links = [
+  ["home", "Home", "home"], ["about", "About", "person"], ["skills", "Skills", "skills"],
+  ["experience", "Experience", "work"], ["projects", "Projects", "projects"],
+  ["education", "Education", "education"], ["contact", "Contact", "contact"],
+] as const;
+---
+
+<aside class="sidebar" aria-label="Main navigation">
+  <div class="sidebar-brand-space" aria-hidden="true"></div>
+  <nav>
+    {links.map(([id, label, icon]) => (
+      <a href={`#${id}`}>
+        <Icon name={icon} /><span>{label}</span>
+      </a>
+    ))}
+  </nav>
+</aside>
+
+<header class="mobile-header">
+  <button class="menu-button" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    {links.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+  </nav>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>(".menu-button");
+  const nav = document.querySelector<HTMLElement>(".mobile-nav");
+  const closeMenu = () => {
+    button?.setAttribute("aria-expanded", "false");
+    nav?.classList.remove("open");
+  };
+  button?.addEventListener("click", () => {
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    nav?.classList.toggle("open", !isOpen);
+  });
+  nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+
+  const sectionLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('.sidebar nav a[href^="#"]'),
+  );
+  const sections = sectionLinks
+    .map((link) => document.querySelector<HTMLElement>(link.hash))
+    .filter((section): section is HTMLElement => section !== null);
+  let manuallySelectedId: string | null = null;
+
+  const setActiveSection = (id: string) => {
+    sectionLinks.forEach((link) => {
+      const isActive = link.hash === "#" + id;
+      link.classList.toggle("active", isActive);
+      if (isActive) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+
+    const nextHash = "#" + id;
+    if (window.location.hash !== nextHash) {
+      window.history.replaceState(null, "", nextHash);
+    }
+  };
+
+  const updateActiveSection = () => {
+    if (manuallySelectedId) {
+      setActiveSection(manuallySelectedId);
+      return;
+    }
+
+    const marker = window.scrollY + window.innerHeight * 0.35;
+    let current: HTMLElement | undefined = sections[0];
+    let currentTop = current
+      ? current.getBoundingClientRect().top + window.scrollY
+      : Number.NEGATIVE_INFINITY;
+
+    for (const section of sections) {
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      if (sectionTop > marker) break;
+      // Panels on the same row share a vertical position. Keep the first one,
+      // matching the page's left-to-right reading order.
+      if (sectionTop > currentTop + 2) {
+        current = section;
+        currentTop = sectionTop;
+      }
+    }
+
+    if (current) setActiveSection(current.id);
+  };
+
+  let scrollFrame = 0;
+  const requestActiveSectionUpdate = () => {
+    if (scrollFrame) return;
+    scrollFrame = window.requestAnimationFrame(() => {
+      updateActiveSection();
+      scrollFrame = 0;
+    });
+  };
+
+  sectionLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      manuallySelectedId = link.hash.slice(1);
+      setActiveSection(manuallySelectedId);
+    });
+  });
+
+  const resumeScrollTracking = () => {
+    manuallySelectedId = null;
+  };
+
+  window.addEventListener("wheel", resumeScrollTracking, { passive: true });
+  window.addEventListener("touchstart", resumeScrollTracking, { passive: true });
+  window.addEventListener("pointerdown", resumeScrollTracking, { passive: true });
+  window.addEventListener("keydown", (event) => {
+    if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) {
+      resumeScrollTracking();
+    }
+  });
+
+  updateActiveSection();
+  window.addEventListener("scroll", requestActiveSectionUpdate, { passive: true });
+  window.addEventListener("resize", requestActiveSectionUpdate);
+</script>

@@ -1,0 +1,24 @@
+---
+interface Props { label: string; note?: string; handDrawn?: boolean }
+const { label, note, handDrawn = true } = Astro.props;
+---
+
+<header class="section-heading">
+  <h2 class:list={[{ "hand-drawn-title": handDrawn }]}>
+    <span>{label}</span>
+    {handDrawn && (
+      <svg viewBox="0 0 173 65" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <!-- The slope is drawn into the outline, not added by rotating a rectangle. -->
+        <path
+          class="title-shape"
+          d="M8.5 15.6 C49 12.8 113 7.2 161 4.5 Q163.3 4.3 162.9 6.8 L158 46.4 Q157.8 48.7 155.1 48.9 C108 52.6 51.7 57.3 5.5 60.4 Q3.5 60.5 3.8 58.4 L6.7 18 Q6.8 15.7 8.5 15.6 Z"
+        />
+        <path
+          class="title-sketch"
+          d="M8.3 16.8 C55 13.4 113 8.4 160.9 5.6 M161.8 8 L156.9 46.2 Q156.7 47.6 154.5 47.9 M153 50 C104 53.5 51 58.1 6 61 M4.9 56 L7.7 19"
+        />
+      </svg>
+    )}
+  </h2>
+  {note && <span>{note}</span>}
+</header>

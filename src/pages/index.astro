@@ -1,0 +1,172 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Sidebar from "../components/Sidebar.astro";
+
+const skills = [
+  { icon: "llms-ai.svg", title: "LLMs & AI Systems", body: "Inference, optimization, deployment, quantization, RAG, voice AI", color: "coral", shape: "M8 12 C245 4 540 10 992 7 L996 386 C730 397 416 388 6 394 Z" },
+  { icon: "computer-vision.svg", title: "Computer Vision", body: "OCR, deep learning, document analysis", color: "blue", shape: "M5 8 C310 14 657 2 994 11 L989 393 C672 386 318 399 10 389 Z" },
+  { icon: "frameworks.svg", title: "Frameworks & Libs", body: "PyTorch, Transformers, LangChain, vLLM, OpenVINO", color: "purple", shape: "M10 6 C318 1 660 13 990 8 L997 388 C695 398 350 390 5 395 Z" },
+  { icon: "backend-infra.svg", title: "Backend & Infra", body: "Python, FastAPI, Django, Docker, Kubernetes, Triton", color: "green", shape: "M7 10 C330 3 645 9 993 5 L988 395 C640 388 350 398 11 390 Z" },
+  { icon: "data.svg", title: "Data & Others", body: "SQL, Elasticsearch, NumPy, Pandas, JavaScript, QML", color: "yellow", shape: "M5 7 C275 13 615 2 995 10 L991 390 C700 399 365 386 8 395 Z" },
+];
+
+const jobs = [
+  { role: "Technical Lead", company: "Roshan", date: "Mar 2025 — Present", art: "ARCHITECT → DEPLOY → SCALE", points: ["Lead AI teams", "Architect LLM inference pipelines", "Build real-time voice AI", "Deliver enterprise RAG systems"] },
+  { role: "AI Engineer", company: "Roshan", date: "Jul 2022 — Mar 2025", art: "OCR · VISION · OPTIMIZATION", points: ["Develop Persian OCR", "Train deep-learning models", "Analyze document layouts", "Accelerate inference"] },
+];
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Seyed Ali Hosseini — AI Engineer" description="Portfolio of Seyed Ali Hosseini, AI engineer and technical lead.">
+  <Sidebar />
+  <main>
+    <section class="panel hero" id="home">
+      <div class="hero-artwork">
+        <img
+          class="hero-image"
+          src={`${base}hero/hero.jpeg`}
+          alt="Seyed Ali Hosseini at his AI development workstation overlooking Tehran"
+        />
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Hi, I’m</p>
+        <h1></h1>
+        <h1>
+          <span class="name-line name-line-first">Seyed Ali</span>
+          <span class="name-line name-line-second">Hosseini</span>
+        </h1>
+        <div class="speech">
+          I build AI solutions that turn complex problems into real-world impact.
+          <svg class="speech-tail" viewBox="0 0 44 38" aria-hidden="true">
+            <path class="speech-tail-fill" d="M4 1 C10 9 13 21 38 34 C27 21 24 10 26 1 Z" />
+            <path d="M4 1 C10 9 13 21 38 34" />
+            <path d="M38 34 C27 21 24 10 26 1" />
+          </svg>
+        </div>
+        <h2>Senior AI Engineer &amp; Tech Lead</h2>
+        <p>Enterprise AI, LLMs, OCR &amp; RAG</p>
+        <div class="contact-lines">
+          <div class="contact-line"><img src={`${base}svgs/location.svg`} alt="" /> <span>Tehran, Iran</span></div>
+          <div class="contact-line"><img src={`${base}svgs/phone.svg`} alt="" /> <a href="tel:+989393150876">+98 939 315 0876</a></div>
+          <div class="contact-line"><img src={`${base}svgs/email.svg`} alt="" /> <a href="mailto:Ali79HM@yahoo.com">Ali79HM@yahoo.com</a></div>
+          <div class="contact-line"><img class="linkedin-icon" src={`${base}svgs/linkedin.svg`} alt="" /> <a href="https://linkedin.com/in/ali79hm">linkedin.com/in/ali79hm</a></div>
+          <div class="contact-line"><img src={`${base}svgs/github.svg`} alt="" /> <a href="https://github.com/ali79hm">github.com/ali79hm</a></div>
+        </div>
+        <a class="button hero-button" href="#about">Explore my story <Icon name="arrow" size={18} /></a>
+      </div>
+      <svg class="hero-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <clipPath id="hero-frame-clip" clipPathUnits="objectBoundingBox">
+            <path d="M.005 .0175 C.17 .005 .33 .0225 .5 .0125 S.825 .0075 .994 .0175 C.997 .2625 .991 .5125 .995 .75 S.997 .9125 .993 .9825 C.82 .995 .665 .975 .5 .9875 S.17 .9975 .006 .9825 C.002 .75 .008 .5125 .004 .275 S.002 .105 .005 .0175 Z" />
+          </clipPath>
+        </defs>
+        <path class="hero-border-main" d="M5 7 C170 2 330 9 500 5 S825 3 994 7 C997 105 991 205 995 300 S997 365 993 393 C820 398 665 390 500 395 S170 399 6 393 C2 300 8 205 4 110 S2 42 5 7 Z" />
+        <path class="hero-border-sketch" d="M7 9 C185 5 345 11 505 7 S820 5 992 9 C994 115 989 210 993 302 S995 362 991 391 C815 395 650 389 495 393 S175 396 8 391 C5 295 10 200 6 108 S5 45 7 9 Z" />
+      </svg>
+    </section>
+
+    <div class="two-column">
+      <section class="panel about" id="about">
+        <div class="about-inner">
+          <div class="about-artwork">
+            <img src={`${base}about/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
+          </div>
+          <SectionTitle label="About me" handDrawn />
+          <div class="about-body">
+            <p>
+              Senior AI Engineer and Tech Lead with 4+ years of experience architecting and scaling enterprise AI systems. I bridge high-level technical strategy and hands-on implementation, mentor engineers, and deliver robust AI products.
+              <svg class="about-text-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <clipPath id="about-card-clip" clipPathUnits="objectBoundingBox">
+                    <path d="M0 .0175 C.18 .005 .335 .025 .5 .0125 S.825 .0075 .994 .0175 C.998 .2625 .991 .5125 .995 .75 S.997 .9125 .994 1 L0 1 Z" />
+                  </clipPath>
+                </defs>
+                <path class="about-text-border-main" d="M0 7 C180 2 335 10 500 5 S825 3 994 7 C998 105 991 205 995 300 S997 365 994 400" />
+                <path class="about-text-border-sketch" d="M0 10 C190 6 350 12 505 8 S820 6 991 10 C994 115 989 210 992 302 S994 362 991 400" />
+              </svg>
+            </p>
+          </div>
+        </div>
+        <svg class="about-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <clipPath id="about-frame-clip" clipPathUnits="objectBoundingBox">
+              <path d="M.005 .0175 C.17 .005 .33 .0225 .5 .0125 S.825 .0075 .994 .0175 C.997 .2625 .991 .5125 .995 .75 S.997 .9125 .993 .9825 C.82 .995 .665 .975 .5 .9875 S.17 .9975 .006 .9825 C.002 .75 .008 .5125 .004 .275 S.002 .105 .005 .0175 Z" />
+            </clipPath>
+          </defs>
+          <path class="about-border-main" d="M5 7 C170 2 330 9 500 5 S825 3 994 7 C997 105 991 205 995 300 S997 365 993 393 C820 398 665 390 500 395 S170 399 6 393 C2 300 8 205 4 110 S2 42 5 7 Z" />
+          <path class="about-border-sketch" d="M7 9 C185 5 345 11 505 7 S820 5 992 9 C994 115 989 210 993 302 S995 362 991 391 C815 395 650 389 495 393 S175 396 8 391 C5 295 10 200 6 108 S5 45 7 9 Z" />
+        </svg>
+      </section>
+
+      <section class="panel skills" id="skills">
+        <SectionTitle label="Skills"  />
+        <div class="skill-grid">
+          {skills.map((skill) => (
+            <article class={`skill-card ${skill.color}`}>
+              <svg class="skill-card-shape" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+                <path class="skill-card-fill" d={skill.shape} />
+                <path class="skill-card-outline" d={skill.shape} />
+                <path class="skill-card-sketch" d={skill.shape} />
+              </svg>
+              <img class="skill-icon" src={`${base}svgs/${skill.icon}`} alt="" />
+              <div><h3>{skill.title}</h3><p>{skill.body}</p></div>
+            </article>
+          ))}
+        </div>
+        <svg class="skills-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <clipPath id="skills-frame-clip" clipPathUnits="objectBoundingBox">
+              <path d="M.005 .0175 C.17 .005 .33 .0225 .5 .0125 S.825 .0075 .994 .0175 C.997 .2625 .991 .5125 .995 .75 S.997 .9125 .993 .9825 C.82 .995 .665 .975 .5 .9875 S.17 .9975 .006 .9825 C.002 .75 .008 .5125 .004 .275 S.002 .105 .005 .0175 Z" />
+            </clipPath>
+          </defs>
+          <path class="skills-border-main" d="M5 7 C170 2 330 9 500 5 S825 3 994 7 C997 105 991 205 995 300 S997 365 993 393 C820 398 665 390 500 395 S170 399 6 393 C2 300 8 205 4 110 S2 42 5 7 Z" />
+          <path class="skills-border-sketch" d="M8 10 C190 4 348 12 510 7 S815 5 991 10 C994 116 988 212 992 304 S995 360 990 390 C812 396 647 387 492 392 S174 396 9 390 C5 292 11 198 7 106 S5 46 8 10 Z" />
+        </svg>
+      </section>
+    </div>
+
+    <section class="panel experience" id="experience">
+      <SectionTitle label="Experience" note="Scroll to see my journey" />
+      <div class="job-grid">
+        {jobs.map((job) => (
+          <article class="job-card">
+            <div class="job-copy">
+              <h3>{job.role}</h3><a href="#">{job.company}</a><time>{job.date}</time>
+              <ul>{job.points.map((point) => <li>{point}</li>)}</ul>
+              <a class="button" href="#">View details <Icon name="arrow" size={17} /></a>
+            </div>
+            <div class="art job-art"><span>{job.art}</span></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <div class="lower-grid">
+      <section class="panel project" id="projects">
+        <SectionTitle label="Projects" note="Ideas into real solutions" />
+        <div class="art project-art"><span>PROJECT<br />SCREENSHOT</span></div>
+        <h3>Jalali Calendar Widget</h3>
+        <p>Open-source KDE Plasma widget for the Jalali calendar with Google Calendar integration.</p>
+        <div class="tags"><span>JavaScript</span><span>QML</span><span>Python</span></div>
+      </section>
+      <section class="panel education" id="education">
+        <SectionTitle label="Education" />
+        <h3>B.Sc. in Computer Engineering</h3>
+        <a href="#">Shahed University</a>
+        <p>2019 — 2023<br />GPA: 17.31 / 20</p>
+        <div class="art education-art"><span>UNIVERSITY<br />ILLUSTRATION</span></div>
+      </section>
+      <section class="panel contact" id="contact">
+        <SectionTitle label="Get in touch" />
+        <div class="art contact-art"><span>LET’S BUILD<br />SOMETHING GREAT</span></div>
+        <div class="social-row">
+          <a href="mailto:Ali79HM@yahoo.com" aria-label="Email"><Icon name="mail" /></a>
+          <a href="https://linkedin.com/in/ali79hm" aria-label="LinkedIn"><Icon name="linkedin" /></a>
+          <a href="https://github.com/ali79hm" aria-label="GitHub"><Icon name="github" /></a>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
