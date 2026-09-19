@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Oswald:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Oswald:wght@400;500;600;700&display=swap");
 
 :root {
   --ink: #171c25;
@@ -40,6 +40,14 @@
   --sidebar-items-left-gap: 7px;
   /* Gap between each sidebar icon and its text label. */
   --sidebar-icon-text-gap: 7px;
+  /* DESKTOP LOWER ROW (> 1250px): Projects : Education : image width ratio. */
+  --projects-column-width: 5fr;
+  --education-column-width: 6fr;
+  --contact-image-column-width: 2fr;
+  /* Education card: negative angles make the left side lower than the right. */
+  --education-card-angle: -3.5deg;
+  /* Space between the top edge of the education card and its degree title. */
+  --education-title-top-gap: 14px;
   font-family: "Kalam", system-ui, sans-serif;
   color: var(--ink);
   background: #d9dde1;
@@ -299,6 +307,9 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 .job-copy h3 { margin: 0 0 2px; font: 700 1.7rem/1.05 "Kalam", cursive; }
 .job-copy time, .job-copy a { display: block; }
 .job-copy > a { color: var(--ink); font: 700 1.7rem/1.05 "Kalam", cursive; }
+.job-copy > .job-company { color: #07529d; }
+.job-company:hover, .job-company:focus-visible,
+.education-copy a:hover, .education-copy a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
 .job-copy time { margin-top: 2px; font-weight: 700; }
 .job-copy ul { margin: 14px 0 0; padding-left: 19px; font-size: 1rem; line-height: 1.45; }
 .job-detail { display: flex; margin: 15px 0 0 auto; padding: 7px 14px; background: var(--blue); font-size: .82rem; cursor: pointer; transform: rotate(-1deg); }
@@ -321,17 +332,52 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .experience-arrow { width: 48px; height: 48px; }
 }
 
-.lower-grid { display: grid; grid-template-columns: 1.2fr .9fr .95fr; gap: 8px; margin-top: 8px; }
+.lower-grid { display: grid; grid-template-columns: var(--projects-column-width) var(--education-column-width) var(--contact-image-column-width); gap: 8px; margin-top: 8px; }
 .lower-grid > section { min-height: 360px; }
-.project-art { height: 180px; margin: -8px -8px 12px; border-bottom: var(--line) solid var(--ink); }
-.project h3, .education h3 { font: 600 1.25rem "Oswald"; margin: 5px 8px; }
-.project p, .education p, .education > a { margin-left: 8px; }
-.tags { display: flex; gap: 6px; margin: 10px 8px; flex-wrap: wrap; }
-.tags span { border-radius: 20px; padding: 3px 9px; background: var(--blue); font-size: .8rem; }
-.education-art { height: 195px; margin: 8px -8px -8px; border-top: var(--line) solid var(--ink); }
-.contact-art { height: 245px; margin: -8px -8px 10px; border-bottom: var(--line) solid var(--ink); }
-.social-row { display: flex; justify-content: center; gap: 10px; }
-.social-row a { display: grid; place-items: center; width: 45px; height: 42px; color: white; background: var(--ink); border-radius: 4px; }
+.project { height: 360px; padding: 0; isolation: isolate; border: 0; box-shadow: none; background: transparent; }
+.project::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, transparent 42%, rgba(17, 28, 43, .11)); clip-path: url("#project-frame-clip"); }
+.project-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; clip-path: url("#project-frame-clip"); }
+.project .section-heading { position: absolute; top: 8px; left: 8px; z-index: 4; }
+.project-copy { position: absolute; top: 20%; right: 4%; z-index: 3; width: 52%; padding: 17px 16px 15px; color: var(--ink); transform: rotate(-1deg); }
+.project-copy::before,
+.project-copy::after { content: ""; position: absolute; inset: 0; z-index: -1; clip-path: polygon(2% 4%, 97% 0, 100% 94%, 4% 100%, 0 53%); }
+.project-copy::before { inset: -4px -5px -6px -5px; background: var(--ink); }
+.project-copy::after { background: rgba(255, 253, 247, .96); }
+.project-copy h3 { margin: 0 0 7px; font: 700 clamp(1rem, 1.35vw, 1.35rem)/1.05 "Kalam", cursive; }
+.project-copy p { margin: 9px 0 0; font-size: clamp(.78rem, .9vw, .94rem); line-height: 1.25; }
+.tags { display: flex; gap: 7px; margin: 0; flex-wrap: wrap; }
+.tags span { border-radius: 20px; padding: 3px 10px 2px; background: #d4e8fb; color: #175b92; font: 700 clamp(.7rem, .9vw, .84rem) "Kalam", cursive; }
+.project-button { position: absolute; right: 5%; bottom: 6%; z-index: 4; min-width: 132px; padding: 7px 16px 5px; background: #c9e0f8; font-size: .88rem; cursor: pointer; transform: rotate(-1deg); }
+.project-button:hover { transform: translate(2px, 2px) rotate(-1deg); }
+.lower-comic-border { position: absolute; inset: 0; z-index: 8; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lower-border-main, .lower-border-sketch { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.lower-border-main { stroke-width: 3.5; }
+.lower-border-sketch { stroke-width: .8; opacity: .5; }
+.lower-comic-border clipPath path { fill: #000; stroke: none; }
+.education { isolation: isolate; overflow: hidden; border: 0; box-shadow: none; background: transparent; clip-path: url("#education-frame-clip"); }
+.education-background { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; clip-path: url("#education-frame-clip"); }
+.education::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(255, 253, 247, .1); clip-path: url("#education-frame-clip"); }
+.education-comic-border .lower-border-main { stroke-width: 4.5; }
+.education-comic-border .lower-border-sketch { stroke-width: 1; }
+.education .section-heading { position: relative; z-index: 5; margin: 4px 0 0 2px; }
+.education .section-heading h2 { transform: rotate(-3deg); transform-origin: left center; }
+.education .section-heading h2 > span { transform: rotate(-2deg); }
+.education-copy { position: relative; z-index: 2; width: min(88%, 390px); margin: -25px 8px 0; padding: var(--education-title-top-gap) 15px 13px; transform: rotate(var(--education-card-angle)); }
+.education-copy::before,
+.education-copy::after { content: ""; position: absolute; z-index: -1; clip-path: polygon(.4% .8%, 99.6% 0, 100% 99.2%, 50% 99.6%, .4% 100%, 0 50%); }
+.education-copy::before { inset: -4px -5px -5px; background: var(--ink); }
+.education-copy::after { inset: 0; background: rgba(255, 253, 247, .96); }
+.education-copy h3 { margin: 0 0 3px; font: normal 700 clamp(1.2rem, 1.4vw, 1.55rem)/1.1 "Kalam", cursive; }
+.education-copy a { color: #164f85; font-weight: 700; }
+.education-copy p { margin: 3px 0 0; line-height: 1.25; }
+.education-university { position: absolute; z-index: 3; left: 50%; bottom: -2%; width: 920px; max-width: none; height: auto; transform: translateX(-50%); pointer-events: none; }
+.contact { padding: 0; }
+.contact-art { position: absolute; inset: 0; display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; }
+
+@media (min-width: 1001px) and (max-width: 1249px) {
+  .lower-grid { grid-template-columns: 1fr 1fr; }
+  .contact { display: none; }
+}
 
 @media (max-width: 1000px) {
   .sidebar { display: none; }
@@ -343,6 +389,8 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .mobile-nav a { color: white; padding: 8px; border-bottom: 1px solid #4d5663; }
   main { margin: 0; padding: 5px; }
   .two-column, .lower-grid { grid-template-columns: 1fr; }
+  .contact { display: none; }
+  .project { height: 420px; }
   .about-body { min-height: 500px; grid-template-columns: 1fr; }
   .about-body p { left: 0; top: 52px; bottom: 0; width: 340px; height: auto; margin: 0; }
   .experience { height: 480px; }
@@ -430,6 +478,12 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .job-copy h3 { font-size: 1.45rem; }
   .job-copy ul { font-size: .9rem; }
   .experience-arrow { width: 48px; height: 48px; }
+  .project { height: 480px; }
+  .project-image { object-position: 35% center; }
+  .project-copy { top: auto; right: 18px; bottom: 76px; width: calc(100% - 36px); padding: 19px 20px 17px; }
+  .project-copy h3 { font-size: 1.25rem; }
+  .project-copy p { font-size: .9rem; }
+  .project-button { right: 20px; bottom: 19px; }
 }
 
 @media (prefers-reduced-motion: reduce) { :root { scroll-behavior: auto; } * { transition: none !important; } }

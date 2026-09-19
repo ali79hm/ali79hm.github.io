@@ -3,7 +3,7 @@ import Icon from "./Icon.astro";
 const links = [
   ["home", "Home", "home"], ["about", "About", "person"], ["skills", "Skills", "skills"],
   ["experience", "Experience", "work"], ["projects", "Projects", "projects"],
-  ["education", "Education", "education"], ["contact", "Contact", "contact"],
+  ["education", "Education", "education"],
 ] as const;
 ---
 
@@ -47,7 +47,11 @@ const links = [
   const sections = sectionLinks
     .map((link) => document.querySelector<HTMLElement>(link.hash))
     .filter((section): section is HTMLElement => section !== null);
-  let manuallySelectedId: string | null = null;
+  // Preserve an incoming anchor while the browser positions the page.
+  // Otherwise the initial scroll position can overwrite #experience with #home.
+  const getRequestedSection = () =>
+    sections.find((section) => "#" + section.id === window.location.hash)?.id ?? null;
+  let manuallySelectedId: string | null = getRequestedSection();
 
   const setActiveSection = (id: string) => {
     sectionLinks.forEach((link) => {
@@ -108,6 +112,11 @@ const links = [
   const resumeScrollTracking = () => {
     manuallySelectedId = null;
   };
+
+  window.addEventListener("hashchange", () => {
+    manuallySelectedId = getRequestedSection();
+    updateActiveSection();
+  });
 
   window.addEventListener("wheel", resumeScrollTracking, { passive: true });
   window.addEventListener("touchstart", resumeScrollTracking, { passive: true });

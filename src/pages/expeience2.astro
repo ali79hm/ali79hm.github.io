@@ -1,0 +1,55 @@
+---
+import ExperienceDetail from "../layouts/ExperienceDetail.astro";
+
+const responsibilities = [
+  {
+    title: "Advanced OCR Development",
+    body: 'Spearheaded the development of the "Alefba" Persian OCR system. Improved handwriting recognition, Arabic diacritics support, and robustness against noise and complex layouts using Attention mechanisms and synthetic data generation.',
+    icon: "M5 14V5h9m18 0h9v9M5 32v9h9m18 0h9v-9M12 29l6-15 6 15m-10-5h8m6-10h6m-6 7h7m-7 8h6",
+    lineIcon: true,
+  },
+  {
+    title: "Advanced Training Techniques",
+    body: "Implemented unsupervised representation learning for segmentation via contrastive and reconstruction methods. Leveraged Teacher-Student pseudo-labeling with large open-source models to continuously bootstrap and expand training datasets.",
+    icon: "M18 8a5 5 0 1 0 10 0 5 5 0 1 0-10 0ZM5 36a5 5 0 1 0 10 0 5 5 0 1 0-10 0Zm26 0a5 5 0 1 0 10 0 5 5 0 1 0-10 0ZM23 13v10M10 31v-8h26v8m-21 5h16",
+  },
+  {
+    title: "Model Optimization & Training",
+    body: "Maximized GPU utilization and accelerated training speeds by implementing TAR dataloaders, dynamic learning rates (OneCycleLR, ReduceLROnPlateau), Label Smoothing, and mixed augmentation strategies (random padding, cropping).",
+    icon: "M10 10h26v26H10Zm7 7h12v12H17ZM16 4v6m7-6v6m7-6v6M16 36v6m7-6v6m7-6v6M4 16h6m-6 7h6m-6 7h6m26-14h6m-6 7h6m-6 7h6",
+  },
+  {
+    title: "Document Layout Analysis",
+    body: "Enhanced structural extraction by replacing heuristic methods with DeepLabV3 segmentation, transitioning towards polygon-based detection, and developing advanced logic for dynamic newspaper column parsing and table extraction.",
+    icon: "M6 4h34v38H6Zm6 6h22v7H12Zm0 13h9v13h-9Zm15 0h7m-7 6h7m-7 7h7",
+  },
+  {
+    title: "Algorithmic Problem Solving",
+    body: "Resolved LSTM memory limitations for processing long/continuous text lines by engineering a fixed-chunking and overlapping algorithm combined with CTC loss.",
+    icon: "m15 9-11 14 11 14m16-28 11 14-11 14M27 6l-8 34",
+    lineIcon: true,
+  },
+  {
+    title: "Production Scalability",
+    body: "Improved system resilience by redesigning the document queuing architecture to support fair dynamic resource allocation for long vs. short documents, and implemented Triton inference server health-checks to prevent request failures during crashes.",
+    icon: "M5 5h34v10H5Zm0 16h34v10H5ZM11 10h2m-2 16h2m15-16h5m-5 16h5M5 39h9l4-5 5 10 5-8h11",
+  },
+  {
+    title: "Inference Acceleration",
+    body: "Accelerated inference speeds using TensorRT and implemented inference on video files via frame-by-frame extraction.",
+    icon: "m26 3-17 23h12l-2 17 18-25H25ZM4 10h8m-9 7h5m27 17h7m-11 7h10",
+  },
+];
+---
+
+<ExperienceDetail
+  role="AI Engineer"
+  company="Roshan"
+  dateFrom="Jul 2022"
+  dateTo="Mar 2025"
+  location="Tehran-Iran"
+  image="experience/exp2/exp2.png"
+  imageAlt="AI engineer developing document recognition systems at a workstation overlooking Tehran"
+  description="AI Engineer experience at Roshan: Persian OCR, model training, document layout analysis, production scalability, and inference acceleration."
+  responsibilities={responsibilities}
+/>

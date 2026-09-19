@@ -146,9 +146,9 @@ const base = import.meta.env.BASE_URL;
               </picture>
             )}
             <div class="job-copy">
-              <h3>{job.role}</h3><a href="#">{job.company}</a><time>{job.date}</time>
+              <h3>{job.role}</h3><a class="job-company" href="https://www.roshan-ai.ir/">{job.company}</a><time>{job.date}</time>
               <ul>{job.points.map((point) => <li>{point}</li>)}</ul>
-              <button class="button job-detail" type="button">View details <Icon name="arrow" size={17} /></button>
+              <a class="button job-detail" href={`${base}expeience${index + 1}`}>View details <Icon name="arrow" size={17} /></a>
             </div>
           </article>
           ))}
@@ -165,27 +165,57 @@ const base = import.meta.env.BASE_URL;
 
     <div class="lower-grid">
       <section class="panel project" id="projects">
-        <SectionTitle label="Projects" note="Ideas into real solutions" />
-        <div class="art project-art"><span>PROJECT<br />SCREENSHOT</span></div>
-        <h3>Jalali Calendar Widget</h3>
-        <p>Open-source KDE Plasma widget for the Jalali calendar with Google Calendar integration.</p>
-        <div class="tags"><span>JavaScript</span><span>QML</span><span>Python</span></div>
+        <img
+          class="project-image"
+          src={`${base}projetcs/pro1.png`}
+          alt="Jalali Calendar Widget running on a KDE Plasma desktop"
+        />
+        <SectionTitle label="Projects" />
+        <article class="project-copy">
+          <h3>Jalali Calendar Widget</h3>
+          <div class="tags" aria-label="Technologies used">
+            <span>JavaScript</span><span>QML</span><span>Python</span>
+          </div>
+          <p>Open-source KDE Plasma widget for the Jalali calendar with Google Calendar integration.</p>
+        </article>
+        <a
+          class="button project-button"
+          href="https://ali79hm.github.io/kde.jalalicalendar.github.io/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >View project</a>
+        <svg class="lower-comic-border project-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+          <defs><clipPath id="project-frame-clip" clipPathUnits="objectBoundingBox"><path d="M.008 .018 C.18 .002 .34 .028 .51 .012 S.82 .006 .992 .024 C.998 .25 .986 .51 .996 .76 S.987 .92 .991 .98 C.82 .999 .66 .976 .49 .99 S.17 .994 .007 .974 C.001 .73 .014 .49 .004 .26 S.011 .09 .008 .018 Z" /></clipPath></defs>
+          <path class="lower-border-main" d="M8 7 C180 1 340 11 510 5 S820 2 992 10 C998 100 986 204 996 304 S987 368 991 392 C820 400 660 390 490 396 S170 398 7 390 C1 292 14 196 4 104 S11 36 8 7 Z" />
+          <path class="lower-border-sketch" d="M10 10 C176 4 344 14 506 8 S824 5 989 12 C994 108 989 198 992 300 S990 366 988 389 C814 396 654 387 495 393 S174 395 10 388 C5 287 11 201 7 109 S8 42 10 10 Z" />
+        </svg>
       </section>
       <section class="panel education" id="education">
+        <img
+          class="education-background"
+          src={`${base}education/back1.png`}
+          alt=""
+          aria-hidden="true"
+        />
         <SectionTitle label="Education" />
-        <h3>B.Sc. in Computer Engineering</h3>
-        <a href="#">Shahed University</a>
-        <p>2019 — 2023<br />GPA: 17.31 / 20</p>
-        <div class="art education-art"><span>UNIVERSITY<br />ILLUSTRATION</span></div>
+        <article class="education-copy">
+          <h3>B.Sc. in Computer Engineering</h3>
+          <a href="http://shahed.ac.ir/">Shahed University</a>
+          <p>2019 — 2023<br />GPA: 17.31 / 20</p>
+        </article>
+        <img
+          class="education-university"
+          src={`${base}education/uni-1.png`}
+          alt="Illustration of the entrance to Shahed University"
+        />
+        <svg class="lower-comic-border education-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+          <defs><clipPath id="education-frame-clip" clipPathUnits="objectBoundingBox"><path d="M.006 .026 C.17 .009 .35 .018 .5 .008 S.83 .019 .995 .014 C.989 .27 .999 .49 .99 .73 S.999 .91 .986 .985 C.81 .974 .67 .999 .5 .984 S.16 .997 .011 .981 C.014 .75 .002 .52 .01 .28 S.002 .1 .006 .026 Z" /></clipPath></defs>
+          <path class="lower-border-main" d="M6 10 C170 4 350 7 500 3 S830 8 995 6 C989 108 999 196 990 292 S999 364 986 394 C810 390 670 400 500 394 S160 399 11 392 C14 300 2 208 10 112 S2 40 6 10 Z" />
+          <path class="lower-border-sketch" d="M9 13 C175 7 345 10 505 6 S825 11 992 9 C986 104 996 201 987 288 S995 360 983 391 C816 387 665 397 496 391 S166 396 14 389 C17 296 5 212 13 116 S5 44 9 13 Z" />
+        </svg>
       </section>
       <section class="panel contact" id="contact">
-        <SectionTitle label="Get in touch" />
-        <div class="art contact-art"><span>LET’S BUILD<br />SOMETHING GREAT</span></div>
-        <div class="social-row">
-          <a href="mailto:Ali79HM@yahoo.com" aria-label="Email"><Icon name="mail" /></a>
-          <a href="https://linkedin.com/in/ali79hm" aria-label="LinkedIn"><Icon name="linkedin" /></a>
-          <a href="https://github.com/ali79hm" aria-label="GitHub"><Icon name="github" /></a>
-        </div>
+        <img class="contact-art" src={`${base}filler/filler1.png`} alt="" loading="lazy" />
       </section>
     </div>
   </main>
@@ -206,9 +236,6 @@ const base = import.meta.env.BASE_URL;
         card.addEventListener("click", () => {
           if (card.getAttribute("aria-hidden") === "true") show(index);
         });
-      });
-      carousel.querySelectorAll<HTMLButtonElement>(".job-detail").forEach((button) => {
-        button.addEventListener("click", () => button.classList.add("is-selected"));
       });
     }
   </script>

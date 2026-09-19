@@ -1,0 +1,66 @@
+---
+import ExperienceDetail from "../layouts/ExperienceDetail.astro";
+
+const responsibilityIcons: Record<string, string> = {
+  "01": "M7 34V7m0 2h24l-5 7 5 7H7m10 11h17m-5-5 5 5-5 5",
+  "02": "M16 20a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm-10 16v-5a10 10 0 0 1 20 0v5m2-26a5 5 0 0 1 0 10m3 5a8 8 0 0 1 5 7v4",
+  "03": "m17 4 8 0 1 5 4 2 5-1 4 7-4 4v4l4 4-4 7-5-1-4 2-1 5h-8l-1-5-4-2-5 1-4-7 4-4v-4l-4-4 4-7 5 1 4-2Zm4 11a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z",
+  "04": "M5 5h32v9H5Zm0 14h32v9H5Zm0 14h32v9H5ZM10 9h2m-2 14h2m-2 14h2M29 9h3m-3 14h3m-3 14h3",
+  "05": "M9 3h18l10 10v29H9Zm18 0v11h10M15 21h16m-16 7h16m-16 7h12",
+  "06": "M5 21v5m7-13v21m8-30v39m8-31v24m8-18v12m6-9v5",
+};
+const responsibilities = [
+  {
+    number: "01",
+    title: "Technical Strategy & Roadmap",
+    body: "Defined the long-term architectural vision for the Alefba OCR and LLM teams, translating high-level product requirements into actionable engineering tasks and sprint milestones.",
+    color: "blue",
+  },
+  {
+    number: "02",
+    title: "Team Mentorship & Code Quality",
+    body: "Mentored a team of AI engineers, driving engineering excellence through rigorous code reviews, pair programming, and standardized coding practices.",
+    color: "coral",
+  },
+  {
+    number: "03",
+    title: "Engineering Leadership & CI/CD",
+    body: "Led the transition and standardization of development workflows for the “Fahm” project, defining branching strategies, release cycles (dev, beta, stable), and CI/CD pipelines to minimize production bugs.",
+    color: "yellow",
+  },
+  {
+    number: "04",
+    title: "LLM Architecture & Deployment",
+    body: "Architected LLM inference pipelines across diverse hardware architectures using vLLM, llama.cpp, and OpenVINO. Implemented load balancing across models to optimize speed, accuracy, and resource allocation.",
+    color: "purple",
+  },
+  {
+    number: "05",
+    title: "Enterprise RAG Systems",
+    body: "Engineered a unified data extraction pipeline for Word, Excel, HTML, PDF, video, and audio. Evaluated embedding models to find the optimal balance of latency and retrieval accuracy.",
+    color: "green",
+  },
+  {
+    number: "06",
+    title: "Real-time AI Integration",
+    body: "Developed and deployed real-time voice conversational AI applications using LiveKit.",
+    color: "blue",
+  },
+];
+---
+
+<ExperienceDetail
+  role="Technical Lead"
+  company="Roshan"
+  dateFrom="March 2025"
+  dateTo="Present"
+  location="Tehran, Iran"
+  image="experience/exp1/exp1.png"
+  imageAlt="Technical lead presenting an AI system architecture to his team"
+  description="Technical Lead experience at Roshan, including AI architecture, engineering leadership, RAG, and real-time voice AI."
+  responsibilities={responsibilities.map((item) => ({
+    ...item,
+    icon: responsibilityIcons[item.number],
+    lineIcon: item.number === "06",
+  }))}
+/>
