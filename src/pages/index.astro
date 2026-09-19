@@ -13,8 +13,8 @@ const skills = [
 ];
 
 const jobs = [
-  { role: "Technical Lead", company: "Roshan", date: "Mar 2025 — Present", art: "ARCHITECT → DEPLOY → SCALE", points: ["Lead AI teams", "Architect LLM inference pipelines", "Build real-time voice AI", "Deliver enterprise RAG systems"] },
-  { role: "AI Engineer", company: "Roshan", date: "Jul 2022 — Mar 2025", art: "OCR · VISION · OPTIMIZATION", points: ["Develop Persian OCR", "Train deep-learning models", "Analyze document layouts", "Accelerate inference"] },
+  { role: "Technical Lead", company: "Roshan", date: "Mar 2025 — Present", image: "exp1.png", points: ["Lead AI teams", "Architect LLM inference pipelines", "Build real-time voice AI", "Deliver enterprise RAG systems"] },
+  { role: "AI Engineer", company: "Roshan", date: "Jul 2022 — Mar 2025", image: "exp2.png", points: ["Develop Persian OCR", "Train deep-learning models", "Analyze document layouts", "Accelerate inference"] },
 ];
 const base = import.meta.env.BASE_URL;
 ---
@@ -128,18 +128,38 @@ const base = import.meta.env.BASE_URL;
     </div>
 
     <section class="panel experience" id="experience">
-      <SectionTitle label="Experience" note="Scroll to see my journey" />
-      <div class="job-grid">
-        {jobs.map((job) => (
-          <article class="job-card">
+      <SectionTitle label="Experience" />
+      <div class="experience-carousel" data-active="0">
+        <div class="experience-slides">
+          {jobs.map((job, index) => (
+          <article class="job-card" data-job={index} aria-hidden={index === 0 ? "false" : "true"}>
+            {index === 0 ? (
+              <picture>
+                <source media="(min-width: 1401px)" srcset={`${base}experience/exp1-1400.png`} />
+                <source media="(min-width: 1250px)" srcset={`${base}experience/exp1-1250.png`} />
+                <img class="job-image" src={`${base}experience/exp1.png`} alt="" />
+              </picture>
+            ) : (
+              <picture>
+                <source media="(min-width: 1250px)" srcset={`${base}experience/exp2-1250.png`} />
+                <img class="job-image" src={`${base}experience/${job.image}`} alt="" />
+              </picture>
+            )}
             <div class="job-copy">
               <h3>{job.role}</h3><a href="#">{job.company}</a><time>{job.date}</time>
               <ul>{job.points.map((point) => <li>{point}</li>)}</ul>
-              <a class="button" href="#">View details <Icon name="arrow" size={17} /></a>
+              <button class="button job-detail" type="button">View details <Icon name="arrow" size={17} /></button>
             </div>
-            <div class="art job-art"><span>{job.art}</span></div>
           </article>
-        ))}
+          ))}
+        </div>
+        <button class="experience-arrow experience-prev" type="button" aria-label="Show previous experience">
+          <Icon name="arrow" size={32} />
+        </button>
+        <button class="experience-arrow experience-next" type="button" aria-label="Show next experience">
+          <Icon name="arrow" size={32} />
+        </button>
+        <div class="experience-count" aria-live="polite"><strong>01</strong><span>/ 02</span></div>
       </div>
     </section>
 
@@ -169,4 +189,27 @@ const base = import.meta.env.BASE_URL;
       </section>
     </div>
   </main>
+  <script>
+    const carousel = document.querySelector<HTMLElement>(".experience-carousel");
+    if (carousel) {
+      const cards = [...carousel.querySelectorAll<HTMLElement>(".job-card")];
+      const counter = carousel.querySelector<HTMLElement>(".experience-count strong");
+      const show = (index: number) => {
+        const active = (index + cards.length) % cards.length;
+        carousel.dataset.active = String(active);
+        cards.forEach((card, i) => card.setAttribute("aria-hidden", String(i !== active)));
+        if (counter) counter.textContent = String(active + 1).padStart(2, "0");
+      };
+      carousel.querySelector(".experience-next")?.addEventListener("click", () => show(Number(carousel.dataset.active) + 1));
+      carousel.querySelector(".experience-prev")?.addEventListener("click", () => show(Number(carousel.dataset.active) - 1));
+      cards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+          if (card.getAttribute("aria-hidden") === "true") show(index);
+        });
+      });
+      carousel.querySelectorAll<HTMLButtonElement>(".job-detail").forEach((button) => {
+        button.addEventListener("click", () => button.classList.add("is-selected"));
+      });
+    }
+  </script>
 </BaseLayout>

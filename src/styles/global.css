@@ -266,15 +266,60 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .skill-card p { margin-top: 3px; font-size: .95rem; line-height: 1.15; }
 }
 
-.experience { margin-top: 8px; }
-.job-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 8px; margin-top: -8px; }
-.job-card { display: grid; grid-template-columns: 42% 58%; min-height: 300px; border: 2px solid var(--ink); background: white; }
-.job-card:nth-child(2) { filter: saturate(.6); }
-.job-copy { padding: 30px 18px 14px; z-index: 1; }
-.job-copy h3 { font: 600 1.35rem "Oswald"; margin: 0; }
+.experience { height: 430px; margin-top: 8px; padding: 0; isolation: isolate; }
+.experience > .section-heading { position: absolute; top: 8px; left: 12px; z-index: 7; }
+.experience-carousel, .experience-slides { position: absolute; inset: 0; }
+.experience-slides { overflow: hidden; }
+.experience-carousel::before,
+.experience-carousel::after { content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; transition: clip-path .65s cubic-bezier(.65, 0, .2, 1); }
+.experience-carousel::before { background: var(--ink); clip-path: polygon(71.45% 0, 72.55% 0, 62.55% 100%, 61.45% 100%); }
+.experience-carousel::after { background: var(--paper); clip-path: polygon(71.72% 0, 72.28% 0, 62.28% 100%, 61.72% 100%); }
+.experience-carousel[data-active="1"]::before { clip-path: polygon(35.45% 0, 36.55% 0, 26.55% 100%, 25.45% 100%); }
+.experience-carousel[data-active="1"]::after { clip-path: polygon(35.72% 0, 36.28% 0, 26.28% 100%, 25.72% 100%); }
+.job-card { position: absolute; inset: 0; overflow: hidden; background: #b7b7b7; transition: clip-path .65s cubic-bezier(.65, 0, .2, 1), filter .45s ease; }
+.job-card::after { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(20, 25, 32, .14); opacity: 1; transition: opacity .4s ease; }
+.job-card[data-job="0"] { z-index: 2; clip-path: polygon(0 0, 72% 0, 62% 100%, 0 100%); }
+.job-card[data-job="1"] { z-index: 1; clip-path: polygon(72% 0, 100% 0, 100% 100%, 62% 100%); filter: grayscale(1) contrast(.9); }
+.experience-carousel[data-active="1"] .job-card[data-job="0"] { z-index: 1; clip-path: polygon(0 0, 36% 0, 26% 100%, 0 100%); filter: grayscale(1) contrast(.9); }
+.experience-carousel[data-active="1"] .job-card[data-job="1"] { z-index: 2; clip-path: polygon(36% 0, 100% 0, 100% 100%, 26% 100%); filter: none; }
+.job-card[aria-hidden="false"]::after { opacity: 0; }
+.job-card[aria-hidden="true"] { cursor: pointer; }
+.job-image { position: absolute; top: 0; right: 0; width: auto; max-width: none; height: 100%; display: block; transition: right .65s cubic-bezier(.65, 0, .2, 1); }
+/* Scale from height so responsive resizing crops the left without changing zoom. */
+.job-card[data-job="0"] .job-image { right: 28%; }
+.experience-carousel[data-active="1"] .job-card[data-job="0"] .job-image { right: 64%; }
+.job-copy { position: absolute; left: 7.5%; top: 20%; z-index: 3; isolation: isolate; width: 350px; min-height: 275px; padding: 29px 30px 25px; color: var(--ink); background: transparent; border: 0; transform: rotate(-1deg); transition: opacity .25s ease, transform .4s ease; }
+.job-copy::before,
+.job-copy::after { content: ""; position: absolute; pointer-events: none; }
+.job-copy::before { inset: -5px -6px -7px -5px; z-index: -2; background: var(--ink); clip-path: polygon(5% 2%, 49% 1%, 95% 3%, 97% 49%, 100% 98%, 51% 99%, 0 97%, 2% 49%); }
+.job-copy::after { inset: -2px -3px -4px -2px; z-index: -1; background: rgba(255, 253, 247, .96); clip-path: polygon(5% 2%, 49% 1.5%, 95% 3%, 97% 49%, 100% 98%, 51% 99%, 0 97%, 2% 49%); }
+.job-card[aria-hidden="true"] .job-copy { opacity: 0; transform: translateX(22px) rotate(-1deg); pointer-events: none; }
+.job-card[data-job="1"] .job-copy { left: 38%; right: auto; transform: rotate(1deg); }
+.job-card[data-job="1"][aria-hidden="true"] .job-copy { transform: translateX(-22px) rotate(1deg); }
+.job-copy h3 { margin: 0 0 2px; font: 700 1.7rem/1.05 "Kalam", cursive; }
 .job-copy time, .job-copy a { display: block; }
-.job-copy ul { padding-left: 18px; font-size: .88rem; }
-.job-art { border-left: 2px solid var(--ink); }
+.job-copy > a { color: var(--ink); font: 700 1.7rem/1.05 "Kalam", cursive; }
+.job-copy time { margin-top: 2px; font-weight: 700; }
+.job-copy ul { margin: 14px 0 0; padding-left: 19px; font-size: 1rem; line-height: 1.45; }
+.job-detail { display: flex; margin: 15px 0 0 auto; padding: 7px 14px; background: var(--blue); font-size: .82rem; cursor: pointer; transform: rotate(-1deg); }
+.job-detail:hover { transform: translate(2px, 2px) rotate(-1deg); }
+.job-detail.is-selected { background: var(--yellow); }
+.experience-arrow { position: absolute; top: 50%; z-index: 8; width: 58px; height: 58px; display: grid; place-items: center; padding: 0; color: var(--ink); background: rgba(255, 253, 247, .9); border: 3px solid var(--ink); border-radius: 50%; box-shadow: 3px 3px 0 var(--ink); cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.experience-arrow:hover { background: var(--yellow); transform: translateY(2px); }
+.experience-arrow svg { pointer-events: none; }
+.experience-prev { left: 18px; transform: rotate(180deg); }
+.experience-prev:hover { transform: rotate(180deg) translateY(-2px); }
+.experience-next { right: 18px; }
+.experience-carousel[data-active="0"] .experience-prev,
+.experience-carousel[data-active="1"] .experience-next { opacity: 0; visibility: hidden; pointer-events: none; }
+.experience-count { position: absolute; right: 82px; bottom: 18px; z-index: 8; padding: 3px 9px; background: rgba(255,253,247,.9); border: 2px solid var(--ink); font: 700 1rem "Oswald"; transform: rotate(-1deg); }
+.experience-count strong { font-size: 1.35rem; }
+
+@media (max-width: 1249px) {
+  .job-copy { left: 4%; width: 300px; }
+  .job-card[data-job="1"] .job-copy { left: 35%; }
+  .experience-arrow { width: 48px; height: 48px; }
+}
 
 .lower-grid { display: grid; grid-template-columns: 1.2fr .9fr .95fr; gap: 8px; margin-top: 8px; }
 .lower-grid > section { min-height: 360px; }
@@ -300,10 +345,24 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .two-column, .lower-grid { grid-template-columns: 1fr; }
   .about-body { min-height: 500px; grid-template-columns: 1fr; }
   .about-body p { left: 0; top: 52px; bottom: 0; width: 340px; height: auto; margin: 0; }
-  .job-grid { grid-template-columns: 1fr; margin-top: 8px; }
-  .job-card { grid-template-columns: 1fr; }
-  .job-copy { grid-row: 2; padding-top: 14px; }
-  .job-art { min-height: 260px; border: 0; border-bottom: 2px solid var(--ink); }
+  .experience { height: 480px; }
+  .experience-carousel::before { clip-path: polygon(0 81.1%, 100% 69.1%, 100% 71.3%, 0 83.3%); }
+  .experience-carousel::after { clip-path: polygon(0 81.65%, 100% 69.65%, 100% 70.75%, 0 82.75%); }
+  .experience-carousel[data-active="1"]::before { clip-path: polygon(0 27.1%, 100% 17.1%, 100% 19.3%, 0 29.3%); }
+  .experience-carousel[data-active="1"]::after { clip-path: polygon(0 27.65%, 100% 17.65%, 100% 18.75%, 0 28.75%); }
+  .job-card[data-job="0"] { clip-path: polygon(0 0, 100% 0, 100% 76%, 0 88%); }
+  .job-card[data-job="1"] { clip-path: polygon(0 82%, 100% 70%, 100% 100%, 0 100%); }
+  .experience-carousel[data-active="1"] .job-card[data-job="0"] { clip-path: polygon(0 0, 100% 0, 100% 24%, 0 34%); }
+  .experience-carousel[data-active="1"] .job-card[data-job="1"] { clip-path: polygon(0 28%, 100% 18%, 100% 100%, 0 100%); }
+  .job-image { right: 0; }
+  .job-card[data-job="0"] .job-image,
+  .experience-carousel[data-active="1"] .job-card[data-job="0"] .job-image { right: 0; }
+  .job-copy, .job-card[data-job="1"] .job-copy { left: 50%; right: auto; top: 25%; width: min(70%, 390px); min-height: 0; transform: translateX(-50%) rotate(-1deg); }
+  .job-card[data-job="1"] .job-copy { top: 38%; transform: translateX(-50%) rotate(1deg); }
+  .job-card[aria-hidden="true"] .job-copy, .job-card[data-job="1"][aria-hidden="true"] .job-copy { transform: translateX(-50%) translateY(18px); }
+  .experience-prev { left: 12px; }
+  .experience-next { right: 12px; }
+  .experience-count { right: 78px; bottom: 12px; }
 }
 
 @media (min-width: 701px) and (max-width: 1000px) {
@@ -366,6 +425,17 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .skill-card, .skill-card:last-child { grid-column: 1; }
   .section-heading h2 { font-size: 1.3rem; }
   .section-heading > span { font-size: .75rem; }
+  .experience { height: 520px; }
+  .job-copy, .job-card[data-job="1"] .job-copy { width: calc(100% - 88px); padding: 22px 20px 18px; }
+  .job-copy h3 { font-size: 1.45rem; }
+  .job-copy ul { font-size: .9rem; }
+  .experience-arrow { width: 48px; height: 48px; }
 }
 
 @media (prefers-reduced-motion: reduce) { :root { scroll-behavior: auto; } * { transition: none !important; } }
+
+@media (hover: none) and (pointer: coarse) {
+  .job-detail,
+  .job-detail:hover,
+  .job-detail:active { transform: rotate(-1deg); box-shadow: 2px 2px 0 var(--ink); transition: none; }
+}
