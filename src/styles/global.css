@@ -77,6 +77,7 @@ body::before {
 .sidebar nav a:hover, .sidebar nav a.active { color: var(--ink); transform: rotate(-1deg); }
 .sidebar nav a:hover::before, .sidebar nav a:hover::after, .sidebar nav a.active::before, .sidebar nav a.active::after { opacity: 1; }
 .mobile-header { display: none; }
+.tablet-brand, .section-heading > .tablet-heading-note { display: none; }
 
 main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 .panel { position: relative; overflow: hidden; background: var(--paper); border: var(--line) solid var(--ink); box-shadow: 1px 1px 0 var(--ink); }
@@ -186,6 +187,7 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 .skills-border-main { stroke-width: 3.5; }
 .skills-border-sketch { stroke-width: .8; opacity: .55; }
 .skills-comic-border clipPath path { fill: #000; stroke: none; }
+.skills-tablet-segments { display: none; }
 .about-border-sketch, .skills-border-sketch { display: none; }
 
 @media (min-width: 1251px) {
@@ -275,9 +277,13 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 }
 
 .experience { height: 430px; margin-top: 8px; padding: 0; isolation: isolate; }
+.experience-comic-border { display: none; }
 .experience > .section-heading { position: absolute; top: 8px; left: 12px; z-index: 7; }
+.experience > .section-heading > span { display: none; }
 .experience-carousel, .experience-slides { position: absolute; inset: 0; }
 .experience-slides { overflow: hidden; }
+.experience-entry { display: contents; }
+.job-timeline-marker { display: none; }
 .experience-carousel::before,
 .experience-carousel::after { content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; transition: clip-path .65s cubic-bezier(.65, 0, .2, 1); }
 .experience-carousel::before { background: var(--ink); clip-path: polygon(71.45% 0, 72.55% 0, 62.55% 100%, 61.45% 100%); }
@@ -414,8 +420,119 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 }
 
 @media (min-width: 701px) and (max-width: 1000px) {
-  .skill-card > div { margin-top: 12px; }
-  .skill-card .skill-icon { margin-top: 12px; }
+  /* One shared skills frame split into five equal, hand-drawn panels. */
+  .skills {
+    height: auto;
+    margin-top: 38px;
+    padding: 0;
+    overflow: visible;
+  }
+  .skills > .section-heading {
+    position: absolute;
+    top: -52px;
+    left: 8px;
+    z-index: 10;
+    padding: 8px;
+    pointer-events: none;
+  }
+  .skill-grid {
+    position: relative;
+    inset: auto;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+  }
+  .skill-card,
+  .skill-card:nth-last-child(-n+2),
+  .skill-card:last-child {
+    grid-column: auto;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 32px 13px 18px;
+    color: var(--ink);
+    text-align: center;
+    background: transparent;
+    transform: translate(var(--skill-x, 0), var(--skill-y, 0));
+  }
+  /* Per-item position controls: positive X moves right; positive Y moves down. */
+  .skill-card:nth-child(1) { --skill-x: 0px; --skill-y: 0px; }
+  .skill-card:nth-child(2) { --skill-x: 10px; --skill-y: 0px; }
+  .skill-card:nth-child(3) { --skill-x: 7px; --skill-y: 0px; }
+  .skill-card:nth-child(4) { --skill-x: 7px; --skill-y: 0px; }
+  .skill-card:nth-child(5) { --skill-x: 0px; --skill-y: 0px; }
+  .skills-tablet-segments {
+    display: block;
+    position: absolute;
+    inset: 3px;
+    z-index: 1;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .skills-tablet-segments .coral-fill { fill: var(--coral); }
+  .skills-tablet-segments .blue-fill { fill: var(--blue); }
+  .skills-tablet-segments .purple-fill { fill: var(--purple); }
+  .skills-tablet-segments .green-fill { fill: var(--green); }
+  .skills-tablet-segments .yellow-fill { fill: var(--yellow); }
+  .skills-tablet-segments .segment-divider {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 3;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .skills-tablet-segments .segment-divider-sketch {
+    stroke-width: .7;
+    opacity: .45;
+  }
+  .skill-card-shape { display: none; }
+  .skill-card .skill-icon {
+    width: 54px;
+    height: 48px;
+    margin: 0;
+  }
+  .skill-card > div { margin: 0; }
+  .skill-card h3 {
+    font-size: clamp(.92rem, 2.55vw, 1.18rem);
+    line-height: 1.08;
+  }
+  .skill-card p {
+    margin-top: 8px;
+    font-size: clamp(1.08rem, 1.62vw, 1.96rem);
+    line-height: 1.2;
+    transform: translateX(-7px);
+  }
+  /* Keep the desktop side-to-side experience transition on tablets. */
+  .experience { height: 430px; }
+  .experience-carousel::before { clip-path: polygon(71.45% 0, 72.55% 0, 62.55% 100%, 61.45% 100%); }
+  .experience-carousel::after { clip-path: polygon(71.72% 0, 72.28% 0, 62.28% 100%, 61.72% 100%); }
+  .experience-carousel[data-active="1"]::before { clip-path: polygon(35.45% 0, 36.55% 0, 26.55% 100%, 25.45% 100%); }
+  .experience-carousel[data-active="1"]::after { clip-path: polygon(35.72% 0, 36.28% 0, 26.28% 100%, 25.72% 100%); }
+  .job-card[data-job="0"] { clip-path: polygon(0 0, 72% 0, 62% 100%, 0 100%); }
+  .job-card[data-job="1"] { clip-path: polygon(72% 0, 100% 0, 100% 100%, 62% 100%); }
+  .experience-carousel[data-active="1"] .job-card[data-job="0"] { clip-path: polygon(0 0, 36% 0, 26% 100%, 0 100%); }
+  .experience-carousel[data-active="1"] .job-card[data-job="1"] { clip-path: polygon(36% 0, 100% 0, 100% 100%, 26% 100%); }
+  .job-card[data-job="0"] .job-image { right: 28%; }
+  .experience-carousel[data-active="1"] .job-card[data-job="0"] .job-image { right: 64%; }
+  .job-copy, .job-card[data-job="1"] .job-copy { left: 4%; top: 20%; width: 300px; min-height: 275px; transform: rotate(-1deg); }
+  .job-card[data-job="1"] .job-copy { left: 35%; transform: rotate(1deg); }
+  .job-card[aria-hidden="true"] .job-copy { transform: translateX(22px) rotate(-1deg); }
+  .job-card[data-job="1"][aria-hidden="true"] .job-copy { transform: translateX(-22px) rotate(1deg); }
+  .experience-prev { left: 18px; }
+  .experience-next { right: 18px; }
+  .experience-count { right: 82px; bottom: 18px; }
+}
+
+@media (min-width: 700px) and (max-width: 1000px) {
+  .lower-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* TABLET HERO (701px–1100px) */
@@ -492,4 +609,415 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .job-detail,
   .job-detail:hover,
   .job-detail:active { transform: rotate(-1deg); box-shadow: 2px 2px 0 var(--ink); transition: none; }
+}
+
+/* Stacked experience timeline for tablet and mobile. */
+@media (max-width: 1000px) {
+  .experience {
+    height: auto;
+    min-height: 0;
+    margin-top: 8px;
+    padding: 76px 10px 14px 38px;
+    overflow: hidden;
+    background-color: #edf5fa;
+    background-image:
+      linear-gradient(rgba(89, 137, 170, .08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(89, 137, 170, .08) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  .experience > .section-heading {
+    top: 5px;
+    left: 7px;
+    right: 8px;
+    align-items: center;
+  }
+  .experience > .section-heading > span:not(.tablet-heading-note) {
+    display: block;
+    width: 120px;
+    padding: 6px 3px 0;
+    font: 700 .7rem/1.05 "Kalam", cursive;
+  }
+  .experience-carousel,
+  .experience-slides {
+    position: relative;
+    inset: auto;
+    overflow: visible;
+  }
+  .experience-carousel::before {
+    inset: -16px auto -22px -22px;
+    width: 3px;
+    background: var(--ink);
+    clip-path: none !important;
+    transition: none;
+  }
+  .experience-carousel::after {
+    display: none;
+  }
+  .experience-slides {
+    display: grid;
+    gap: 12px;
+  }
+  .job-card,
+  .job-card[data-job="0"],
+  .job-card[data-job="1"],
+  .experience-carousel[data-active="1"] .job-card[data-job="0"],
+  .experience-carousel[data-active="1"] .job-card[data-job="1"] {
+    position: relative;
+    inset: auto;
+    z-index: 2;
+    min-height: 0;
+    padding: 15px 10px 10px;
+    overflow: visible;
+    background: rgba(255, 253, 247, .97);
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    box-shadow: 2px 3px 0 rgba(23, 28, 37, .18);
+    clip-path: none;
+    filter: none;
+    cursor: default;
+    transform: rotate(var(--experience-card-angle, -.25deg));
+    transition: none;
+  }
+  .experience-entry:nth-child(even) { --experience-card-angle: .25deg; }
+  .job-card::before {
+    content: "";
+    position: absolute;
+    top: 21px;
+    left: -29px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 0 3px #edf5fa;
+  }
+  .job-card::after { display: none; }
+  .job-card picture { display: block; margin-top: 42px; }
+  .job-image,
+  .job-card[data-job="0"] .job-image,
+  .experience-carousel[data-active="1"] .job-card[data-job="0"] .job-image {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: 100%;
+    height: clamp(190px, 41vw, 330px);
+    object-fit: cover;
+    object-position: 82% center;
+    border: 2px solid var(--ink);
+    transition: none;
+  }
+  .job-card[data-job="1"] .job-image { object-position: 83% center; }
+  .job-copy,
+  .job-card[data-job="1"] .job-copy,
+  .job-card[aria-hidden="true"] .job-copy,
+  .job-card[data-job="1"][aria-hidden="true"] .job-copy {
+    position: static;
+    width: auto;
+    min-height: 0;
+    padding: 10px 2px 0;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .job-copy::before,
+  .job-copy::after { display: none; }
+  .job-copy h3 {
+    position: absolute;
+    top: 12px;
+    left: 11px;
+    margin: 0;
+    font: 700 1.25rem/1 "Kalam", cursive;
+  }
+  .job-copy > .job-company {
+    position: absolute;
+    top: 15px;
+    right: 11px;
+    font: 700 .88rem/1 "Kalam", cursive;
+  }
+  .job-copy time {
+    position: absolute;
+    top: 34px;
+    left: 11px;
+    margin: 0;
+    font-size: .8rem;
+  }
+  .job-copy ul {
+    margin: 0 0 10px;
+    padding-left: 19px;
+    font-size: clamp(.82rem, 2.2vw, 1rem);
+    line-height: 1.28;
+  }
+  .job-detail {
+    width: 100%;
+    margin: 8px 0 0;
+    padding: 7px 14px;
+    font-size: .78rem;
+    transform: none;
+  }
+  .experience-arrow,
+  .experience-count { display: none; }
+}
+
+@media (max-width: 560px) {
+  .experience { padding: 72px 8px 11px 31px; }
+  .experience-carousel::before { left: -17px; }
+  .job-card::before { left: -24px; }
+  .job-card picture { margin-top: 40px; }
+  .job-image,
+  .job-card[data-job="0"] .job-image,
+  .experience-carousel[data-active="1"] .job-card[data-job="0"] .job-image {
+    height: clamp(180px, 58vw, 270px);
+  }
+}
+
+/* A lightly tilted paper-card timeline on narrow screens. */
+@media (width < 700px) {
+  .experience { --experience-timeline-x: -22px; padding-right: 14px; padding-bottom: 18px; }
+  .experience-slides { gap: 20px; }
+  .experience-entry {
+    position: relative;
+    display: block;
+    min-width: 0;
+    --experience-card-angle: -.65deg;
+  }
+  .experience-entry:nth-child(even) { --experience-card-angle: .55deg; }
+  .experience-carousel::before { left: var(--experience-timeline-x); }
+  .experience-entry .job-card {
+    transform-origin: 0 22px;
+    border-radius: 3px 6px 4px 2px / 5px 3px 6px 4px;
+  }
+  .job-card::before { display: none; }
+  .job-timeline-marker {
+    display: block;
+    position: absolute;
+    top: 22px;
+    left: var(--experience-timeline-x);
+    z-index: 7;
+    width: calc(-1 * var(--experience-timeline-x));
+    height: 2px;
+    background: var(--ink);
+    pointer-events: none;
+  }
+  .job-timeline-marker::before,
+  .job-timeline-marker::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+  }
+  .job-timeline-marker::before {
+    top: -2px;
+    left: -1.5px;
+    width: 6px;
+    height: 6px;
+    background: var(--ink);
+  }
+  .job-timeline-marker::after {
+    top: 25px;
+    left: -3.5px;
+    width: 10px;
+    height: 10px;
+    background: var(--yellow);
+  }
+  .job-copy ul { font-size: 1.05rem; line-height: 1.4; }
+  .job-copy > .job-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .experience { --experience-timeline-x: -17px; }
+}
+
+/* Reference tablet layout: top navigation and two illustrated timeline rows. */
+@media (min-width: 700px) and (max-width: 1000px) {
+  :root { scroll-padding-top: 84px; }
+  .mobile-header { display: none; }
+  .sidebar {
+    position: sticky;
+    inset: 0 0 auto;
+    z-index: 15;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 76px;
+    padding: 10px 12px;
+    border-bottom: 3px solid #080c12;
+    background: linear-gradient(110deg, #252b34, var(--ink));
+  }
+  .sidebar-brand-space {
+    display: none;
+  }
+  .sidebar nav { display: flex; align-items: center; flex: 1; min-width: 0; gap: 0; }
+  .sidebar nav a {
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: clamp(5px, .9vw, 10px);
+    min-width: 0;
+    height: 46px;
+    padding: 9px clamp(5px, 1vw, 12px);
+    border-right: 1px solid #58606d;
+    color: #f2f3f5;
+    font-size: clamp(.8rem, 1.65vw, 1.05rem);
+    white-space: nowrap;
+  }
+  .sidebar nav a:last-child { border-right: 0; }
+  .sidebar nav a svg { flex: 0 0 auto; width: clamp(19px, 2.5vw, 26px); height: 26px; }
+  /* Keep the yellow marker exclusive to scroll-tracked navigation state.
+     A hovered link can otherwise stay yellow beneath the pointer while a
+     different link becomes active during scrolling. */
+  .sidebar nav a:hover:not(.active) {
+    color: #f2f3f5;
+    transform: none;
+  }
+  .sidebar nav a:hover:not(.active)::before,
+  .sidebar nav a:hover:not(.active)::after { opacity: 0; }
+  .sidebar nav a.active { color: var(--ink); }
+  .sidebar nav a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+
+  .experience {
+    --experience-timeline-x: -27px;
+    padding: clamp(104px, 13vw, 135px) 14px 24px 54px;
+    overflow: visible;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+  .experience::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--paper);
+    background-image:
+      url("/src/assets/experience-sky.svg"),
+      radial-gradient(rgba(51, 75, 91, .12) .7px, transparent .8px);
+    background-position: center top, 0 0;
+    background-size: 100% 155px, 6px 6px;
+    background-repeat: no-repeat, repeat;
+    clip-path: url("#experience-frame-clip");
+  }
+  .experience-comic-border {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .experience-border-main,
+  .experience-border-sketch {
+    fill: none;
+    stroke: var(--ink);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .experience-border-main { stroke-width: 3.5; }
+  .experience-border-sketch { stroke-width: .7; opacity: .35; }
+  .experience > .section-heading {
+    top: -8px;
+    left: 20px;
+    right: 20px;
+    z-index: 10;
+  }
+  .experience .section-heading h2.hand-drawn-title {
+    --title-fill: #ffdf79;
+    padding: 27px 28px 22px;
+    font-size: clamp(2.25rem, 4.8vw, 3.1rem);
+  }
+  .experience > .section-heading > span.default-heading-note { display: none; }
+  .experience > .section-heading > .tablet-heading-note {
+    display: block;
+    width: auto;
+    max-width: none;
+    margin-top: 14px;
+    padding: 6px 0;
+    font: 700 clamp(1rem, 2.1vw, 1.4rem)/1.1 "Kalam", cursive;
+    transform: rotate(-5deg);
+  }
+  .tablet-heading-note::after {
+    content: "";
+    display: block;
+    width: 80%;
+    height: 7px;
+    margin: 5px 0 0 auto;
+    border-top: 3px solid var(--ink);
+    border-radius: 50%;
+    transform: rotate(-5deg);
+  }
+  .experience-carousel::before { inset: 10px auto 8px var(--experience-timeline-x); width: 3px; }
+  .experience-slides { gap: 16px; }
+  .experience-entry { position: relative; display: block; min-width: 0; }
+  .experience .job-card {
+    display: grid;
+    grid-template-columns: 57% minmax(0, 1fr);
+    min-height: clamp(300px, 39vw, 390px);
+    padding: 0;
+    overflow: hidden;
+    border: 3px solid var(--ink);
+    border-radius: 2px;
+    box-shadow: none;
+    transform: none;
+  }
+  .job-card::before { display: none; }
+  .job-timeline-marker {
+    display: block;
+    position: absolute;
+    top: 21%;
+    left: calc(var(--experience-timeline-x) + 1.5px);
+    z-index: 7;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    background: var(--yellow);
+    transform: translateX(-50%);
+  }
+  .job-card picture { position: relative; min-width: 0; margin: 0; border-right: 3px solid var(--ink); }
+  .experience .job-card .job-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-position: right center;
+  }
+  .experience .job-card[data-job="0"] .job-image { object-position: 75% center; }
+  .experience .job-card .job-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: clamp(17px, 2.5vw, 27px);
+    background: transparent;
+  }
+  .experience .job-copy h3,
+  .experience .job-copy > .job-company,
+  .experience .job-copy time { position: static; margin: 0; }
+  .experience .job-copy h3 { font-size: clamp(1.6rem, 3.3vw, 2.15rem); line-height: 1.1; }
+  .experience .job-copy > .job-company { margin-top: 3px; font-size: clamp(1.5rem, 3.1vw, 2rem); line-height: 1.1; }
+  .experience .job-copy time { margin-top: 3px; font-size: clamp(.92rem, 1.85vw, 1.2rem); }
+  .experience .job-copy ul { margin: 16px 0 20px; padding-left: 20px; font-size: clamp(.95rem, 1.85vw, 1.2rem); line-height: 1.4; }
+  .experience .job-copy > .job-detail {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin: auto 0 0;
+    padding: 11px 8px 8px;
+    border-radius: 3px;
+    box-shadow: none;
+    font-size: clamp(1.1rem, 2.25vw, 1.45rem);
+    white-space: nowrap;
+    transform: none;
+  }
+  .experience .job-detail svg { width: 26px; height: 26px; }
+  .experience .job-detail:hover { background: var(--yellow); }
 }

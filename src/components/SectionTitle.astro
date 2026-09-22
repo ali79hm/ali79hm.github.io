@@ -1,6 +1,6 @@
 ---
-interface Props { label: string; note?: string; handDrawn?: boolean }
-const { label, note, handDrawn = true } = Astro.props;
+interface Props { label: string; note?: string; tabletNote?: string; handDrawn?: boolean }
+const { label, note, tabletNote, handDrawn = true } = Astro.props;
 ---
 
 <header class="section-heading">
@@ -20,5 +20,6 @@ const { label, note, handDrawn = true } = Astro.props;
       </svg>
     )}
   </h2>
-  {note && <span>{note}</span>}
+  {note && <span class:list={[{ "default-heading-note": tabletNote }]}>{note}</span>}
+  {tabletNote && <span class="tablet-heading-note">{tabletNote}</span>}
 </header>
