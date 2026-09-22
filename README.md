@@ -2,6 +2,8 @@
 
 A static comic-book portfolio built with Astro, TypeScript, and vanilla CSS. The visual direction is documented in [`idea/`](idea/).
 
+http://ali79hm.github.io/
+
 ## Run locally
 
 ```bash
