@@ -24,19 +24,27 @@ const base = import.meta.env.BASE_URL;
   <main>
     <section class="panel hero" id="home">
       <div class="hero-artwork">
-        <img
-          class="hero-image"
-          src={`${base}hero/hero.jpeg`}
-          alt="Seyed Ali Hosseini at his AI development workstation overlooking Tehran"
-        />
+        <picture>
+          <source media="(width < 600px)" srcset={`${base}hero/hero-mobile.jpeg`} />
+          <source media="(min-width: 600px) and (max-width: 750px)" srcset={`${base}hero/hero-min.jpeg`} />
+          <img
+            class="hero-image"
+            src={`${base}hero/hero.jpeg`}
+            alt="Seyed Ali Hosseini at his AI development workstation overlooking Tehran"
+          />
+        </picture>
       </div>
       <div class="hero-copy">
-        <p class="eyebrow">Hi, I’m</p>
-        <h1></h1>
-        <h1>
-          <span class="name-line name-line-first">Seyed Ali</span>
-          <span class="name-line name-line-second">Hosseini</span>
-        </h1>
+        <div class="hero-intro">
+          <svg class="hero-name-bubble" viewBox="0 0 650 500" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M35 62 C75 15 240 8 360 12 C490 10 601 18 622 68 C644 116 638 267 615 316 C596 357 477 369 374 375 L310 490 L309 382 C196 397 73 397 39 365 C8 337 8 117 35 62 Z" />
+          </svg>
+          <p class="eyebrow">Hi, I’m</p>
+          <h1>
+            <span class="name-line name-line-first">Seyed Ali</span>
+            <span class="name-line name-line-second">Hosseini</span>
+          </h1>
+        </div>
         <div class="speech">
           I build AI solutions that turn complex problems into real-world impact.
           <svg class="speech-tail" viewBox="0 0 44 38" aria-hidden="true">
@@ -71,12 +79,16 @@ const base = import.meta.env.BASE_URL;
       <section class="panel about" id="about">
         <div class="about-inner">
           <div class="about-artwork">
-            <img src={`${base}about/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
+            <picture>
+              <source media="(width < 600px)" srcset={`${base}about/tehran-mobile.png`} />
+              <img src={`${base}about/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
+            </picture>
           </div>
           <SectionTitle label="About me" handDrawn />
           <div class="about-body">
             <p>
-              Senior AI Engineer and Tech Lead with 4+ years of experience architecting and scaling enterprise AI systems. I bridge high-level technical strategy and hands-on implementation, mentor engineers, and deliver robust AI products.
+              <span class="about-copy-default">Senior AI Engineer and Tech Lead with 4+ years of experience architecting and scaling enterprise AI systems. I bridge high-level technical strategy and hands-on implementation, mentor engineers, and deliver robust AI products.</span>
+              <span class="about-copy-mobile">Senior AI Engineer and Tech Lead with 4+ years of experience architecting and scaling enterprise AI systems. Proven expertise in applied machine learning, deep learning, LLM inference optimization, and backend development. Adept at bridging the gap between high-level technical strategy and hands-on implementation, with a strong track record of mentoring engineers and delivering robust AI solutions.</span>
               <svg class="about-text-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
                   <clipPath id="about-card-clip" clipPathUnits="objectBoundingBox">
@@ -91,10 +103,14 @@ const base = import.meta.env.BASE_URL;
         </div>
         <svg class="about-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
           <defs>
+            <clipPath id="about-mobile-frame-clip" clipPathUnits="objectBoundingBox">
+              <path d="M.006 .009 H.994 V.991 H.006 Z" />
+            </clipPath>
             <clipPath id="about-frame-clip" clipPathUnits="objectBoundingBox">
               <path d="M.005 .0175 C.17 .005 .33 .0225 .5 .0125 S.825 .0075 .994 .0175 C.997 .2625 .991 .5125 .995 .75 S.997 .9125 .993 .9825 C.82 .995 .665 .975 .5 .9875 S.17 .9975 .006 .9825 C.002 .75 .008 .5125 .004 .275 S.002 .105 .005 .0175 Z" />
             </clipPath>
           </defs>
+          <path class="about-border-mobile" d="M6 3.6 H994 V396.4 H6 Z" />
           <path class="about-border-main" d="M5 7 C170 2 330 9 500 5 S825 3 994 7 C997 105 991 205 995 300 S997 365 993 393 C820 398 665 390 500 395 S170 399 6 393 C2 300 8 205 4 110 S2 42 5 7 Z" />
           <path class="about-border-sketch" d="M7 9 C185 5 345 11 505 7 S820 5 992 9 C994 115 989 210 993 302 S995 362 991 391 C815 395 650 389 495 393 S175 396 8 391 C5 295 10 200 6 108 S5 45 7 9 Z" />
         </svg>
@@ -152,14 +168,14 @@ const base = import.meta.env.BASE_URL;
           <article class="job-card" data-job={index} aria-hidden={index === 0 ? "false" : "true"}>
             {index === 0 ? (
               <picture>
-                <source media="(min-width: 700px) and (max-width: 1000px)" srcset={`${base}experience/exp1/exp1.png`} />
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp1/exp1.png`} />
                 <source media="(min-width: 1401px)" srcset={`${base}experience/exp1-1400.png`} />
                 <source media="(min-width: 1250px)" srcset={`${base}experience/exp1-1250.png`} />
                 <img class="job-image" src={`${base}experience/exp1.png`} alt="" />
               </picture>
             ) : (
               <picture>
-                <source media="(min-width: 700px) and (max-width: 1000px)" srcset={`${base}experience/exp2/exp2.png`} />
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp2/exp2.png`} />
                 <source media="(min-width: 1250px)" srcset={`${base}experience/exp2-1250.png`} />
                 <img class="job-image" src={`${base}experience/${job.image}`} alt="" />
               </picture>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Oswald:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400&family=Kalam:wght@400;700&family=Oswald:wght@400;500;600;700&display=swap");
 
 :root {
   --ink: #171c25;
@@ -114,8 +114,10 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 .hero-artwork { position: absolute; inset: 0; z-index: 1; overflow: hidden; clip-path: url("#hero-frame-clip"); }
 .hero-image { position: absolute; left: -.75%; top: -1%; width: auto; max-width: none; height: 102%; object-fit: contain; object-position: left center; }
 .hero-copy { position: relative; width: 42%; height: 100%; min-height: 0; padding: var(--hero-text-y) 20px 22px var(--hero-text-x); z-index: 2; }
+.hero-intro { display: contents; }
+.hero-name-bubble { display: none; }
 .eyebrow { width: max-content; margin: 0 0 2px; font: 700 var(--hero-hi-size)/1 "Kalam", cursive; text-transform: uppercase; transform: rotate(var(--hero-hi-angle)); transform-origin: left center; }
-.hero h1 { width: max-content; margin: 0 0 18px; font: 700 var(--hero-name-size)/.84 "Kalam", cursive; letter-spacing: -.055em; text-transform: uppercase; }
+.hero h1 { width: max-content; margin: 18px 0; font: 700 var(--hero-name-size)/.84 "Kalam", cursive; letter-spacing: -.055em; text-transform: uppercase; }
 .name-line { display: block; width: max-content; transform-origin: left center; }
 .name-line-first { transform: rotate(var(--hero-name-first-angle)); }
 .name-line-second { transform: rotate(var(--hero-name-second-angle)); }
@@ -165,6 +167,7 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 .about-text-border-main, .about-text-border-sketch { fill: none; stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .about-text-border clipPath path { fill: #000; stroke: none; }
 .about-text-border .about-text-border-sketch { stroke-width: .8; opacity: .5; }
+.about-copy-mobile, .about-border-mobile { display: none; }
 .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 8px; }
 .skill-card { position: relative; isolation: isolate; min-height: 116px; display: grid; grid-template-columns: 64px 1fr; gap: 9px; align-items: start; padding: 14px 13px; border: 0; background: transparent; }
 .skill-card:nth-last-child(-n+2) { grid-column: span 1; }
@@ -368,7 +371,7 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 .education .section-heading { position: relative; z-index: 5; margin: 4px 0 0 2px; }
 .education .section-heading h2 { transform: rotate(-3deg); transform-origin: left center; }
 .education .section-heading h2 > span { transform: rotate(-2deg); }
-.education-copy { position: relative; z-index: 2; width: min(88%, 390px); margin: -25px 8px 0; padding: var(--education-title-top-gap) 15px 13px; transform: rotate(var(--education-card-angle)); }
+.education-copy { position: relative; z-index: 2; width: fit-content; max-width: calc(100% - 16px); margin: -25px 8px 0; padding: var(--education-title-top-gap) 15px 13px; transform: rotate(var(--education-card-angle)); }
 .education-copy::before,
 .education-copy::after { content: ""; position: absolute; z-index: -1; clip-path: polygon(.4% .8%, 99.6% 0, 100% 99.2%, 50% 99.6%, .4% 100%, 0 50%); }
 .education-copy::before { inset: -4px -5px -5px; background: var(--ink); }
@@ -419,7 +422,7 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .experience-count { right: 78px; bottom: 12px; }
 }
 
-@media (min-width: 701px) and (max-width: 1000px) {
+@media (min-width: 601px) and (max-width: 1000px) {
   /* One shared skills frame split into five equal, hand-drawn panels. */
   .skills {
     height: auto;
@@ -531,12 +534,24 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .experience-count { right: 82px; bottom: 18px; }
 }
 
-@media (min-width: 700px) and (max-width: 1000px) {
+@media (min-width: 600px) and (max-width: 1000px) {
   .lower-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* TABLET HERO (701px–1100px) */
-@media (min-width: 701px) and (max-width: 1000px) {
+@media (min-width: 600px) and (max-width: 699px) {
+  .education-copy h3 { font-size: 1.05rem; }
+}
+
+@media (min-width: 600px) and (max-width: 1000px) {
+  .lower-grid > .project,
+  .lower-grid > .education {
+    height: 380px;
+    min-height: 360px;
+  }
+}
+
+/* TABLET HERO (600px–1000px) */
+@media (min-width: 600px) and (max-width: 1000px) {
   :root {
     --hero-text-x: 42px;
     --hero-text-y: 30px;
@@ -555,37 +570,190 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 
 }
 
-/* MOBILE HERO (up to 700px) */
-@media (max-width: 700px) {
+/* Compact tablet hero (600px–750px). */
+@media (min-width: 600px) and (max-width: 750px) {
   :root {
-    --hero-text-x: 24px;
-    --hero-text-y: 25px;
-    --hero-bubble-x: calc(100% - 236px);
-    --hero-bubble-y: 180px;
-    --hero-hi-size: 1.4rem;
-    --hero-name-size: 2.75rem;
-    --hero-role-size: 1.2rem;
-    --hero-specialties-size: 1rem;
-    --hero-bubble-size: .88rem;
-    --hero-contact-size: 1rem;
+    /* Main hero text position: increase Y to move the whole text group down. */
+    --hero-text-y: 45px;
+    /* Speech bubble position: increase X to move right, Y to move down. */
+    --hero-bubble-x: 280px;
+    --hero-bubble-y: 15px;
+    --hero-hi-size: 1.3rem;
+    --hero-name-size: 3.2rem;
+    --hero-role-size: 1.15rem;
+    --hero-specialties-size: .92rem;
+    --hero-bubble-size: .86rem;
+    --hero-contact-size: .92rem;
   }
-  .hero { height: auto; min-height: 0; padding-top: 480px; aspect-ratio: auto; }
-  .hero-image { width: 100%; max-width: 100%; height: 480px; object-fit: cover; object-position: 67% center; border-bottom: var(--line) solid var(--ink); }
-  .hero-copy { position: static; width: 100%; min-height: auto; padding: 22px 18px; background: transparent; }
-  .hero .eyebrow, .hero h1 { position: absolute; z-index: 2; left: var(--hero-text-x); top: var(--hero-text-y); }
-  .hero h1 { top: calc(var(--hero-text-y) + 25px); padding: 13px; background: white; border: var(--line) solid var(--ink); border-radius: 30% 35% 25% 28%; }
-  .speech { left: var(--hero-bubble-x); top: var(--hero-bubble-y); width: 220px; }
-  .hero-button { display: flex; }
+
+  /* Bubble pointer position: increase right to move left; decrease bottom to move down. */
+  .speech-tail {
+    right: 105px;
+    bottom: -31px;
+    transform: rotate(0deg);
+  }
+}
+
+/* MOBILE HERO: image and bubble share the same width-based coordinates. */
+@media (width < 600px) {
+  .hero {
+    /* Match the mobile artwork's 1122 × 1173 dimensions. */
+    --hero-mobile-image-height: calc(100cqw * 1173 / 1122);
+    container-type: inline-size;
+    height: auto;
+    min-height: 0;
+    border: var(--line) solid var(--ink);
+    background: var(--paper);
+    transform: none;
+  }
+  .hero::before, .hero-comic-border { display: none; }
+  .hero-artwork {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: var(--hero-mobile-image-height);
+    clip-path: none;
+  }
+  .hero-image {
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .hero-copy {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    margin-top: -10cqw;
+    padding: 5cqw 6cqw 6cqw;
+    background: transparent;
+  }
+  .hero-copy::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--hero-mobile-image-height) - 10cqw);
+    bottom: -12cqw;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    border-top: var(--line) solid var(--ink);
+    background: var(--paper);
+    transform: skewY(-6deg);
+    transform-origin: left top;
+    pointer-events: none;
+  }
+  .hero-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    left: 2cqw;
+    top: 2cqw;
+    width: 65cqw;
+    height: 50cqw;
+    padding-top: 6cqw;
+  }
+  .hero-name-bubble { display: block; position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; overflow: visible; }
+  .hero-name-bubble path { fill: var(--paper); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .hero .eyebrow { margin: 0 0 1cqw; font-size: 6cqw; transform: rotate(-6deg); }
+  .hero h1 { margin: 0; font-size: 9.4cqw; line-height: .96; letter-spacing: -.045em; text-align: center; }
+  .hero .name-line { width: auto; transform: rotate(-6deg); transform-origin: center; }
+  .hero .speech, .hero-button { display: none; }
+  .hero h2, .hero-copy > p:not(.eyebrow), .hero .contact-lines {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    transform: rotate(-6deg);
+    transform-origin: left top;
+    font-family: "Kalam", cursive;
+  }
+  .hero h2, .hero-copy > p:not(.eyebrow) {
+    top: -2cqw;
+    font-family: "Kalam", cursive;
+  }
+  .hero h2 { margin: 0 0 1.5cqw; font-size: 4.65cqw; line-height: 1.2; }
+  .hero-copy > p:not(.eyebrow) { margin: 0; font-size: 4cqw; line-height: 1.3; }
+  .hero .contact-lines { gap: 2cqw; margin-top: 4cqw; font-size: 4.2cqw; font-weight: 400; }
+  .hero .contact-line { max-width: 100%; gap: 3.5cqw; line-height: 1.2; }
+  .hero .contact-line img { width: 4.8cqw; height: 4.8cqw; flex-basis: 4.8cqw; }
+  .hero .contact-line a { overflow-wrap: anywhere; min-width: 0; }
+  .hero .contact-line a[href^="tel:"] { color: var(--ink); }
+}
+
+/* Mobile skills: a clean section frame with softly hand-drawn cards. */
+@media (width < 600px) {
+  .skills {
+    padding: 8px;
+    border: var(--line) solid var(--ink);
+    background: var(--paper);
+    box-shadow: 1px 1px 0 var(--ink);
+  }
+  .skills::before,
+  .skills-comic-border { display: none; }
+  .skill-grid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+  .skill-card,
+  .skill-card:nth-last-child(-n+2),
+  .skill-card:last-child {
+    grid-column: 1;
+    min-height: 116px;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 2px solid var(--ink);
+    border-radius: 7px 5px 8px 6px / 5px 8px 6px 7px;
+    background: currentColor;
+  }
+  .skill-card:nth-child(even) {
+    border-radius: 5px 8px 6px 7px / 7px 5px 8px 6px;
+  }
+  .skill-card-shape { display: none; }
+  .skill-card .skill-icon {
+    align-self: center;
+    width: 58px;
+    height: 52px;
+    object-position: center;
+  }
+  .skill-card > div {
+    align-self: center;
+  }
+  .skill-card h3 {
+    font-size: 1.18rem;
+  }
+  .skill-card p {
+    font-size: .96rem;
+    line-height: 1.24;
+  }
+
+  .project,
+  .education {
+    border: var(--line) solid var(--ink);
+    box-shadow: 1px 1px 0 var(--ink);
+    clip-path: none;
+  }
+  .lower-grid > .education {
+    height: 380px;
+    min-height: 380px;
+  }
+  .project-image,
+  .project::after,
+  .education-background,
+  .education::before {
+    clip-path: none;
+  }
+  .project-comic-border,
+  .education-comic-border {
+    display: none;
+  }
 }
 
 @media (max-width: 560px) {
-  :root {
-    --hero-bubble-x: calc(100% - 221px);
-    --hero-bubble-y: 205px;
-  }
-  .hero { padding-top: 505px; }
-  .hero-image { height: 505px; }
-  .speech { width: 205px; }
   .skill-grid { grid-template-columns: 1fr; }
   .skill-card, .skill-card:last-child { grid-column: 1; }
   .section-heading h2 { font-size: 1.3rem; }
@@ -772,7 +940,7 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
 }
 
 /* A lightly tilted paper-card timeline on narrow screens. */
-@media (width < 700px) {
+@media (width < 600px) {
   .experience { --experience-timeline-x: -22px; padding-right: 14px; padding-bottom: 18px; }
   .experience-slides { gap: 20px; }
   .experience-entry {
@@ -833,8 +1001,25 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   .experience { --experience-timeline-x: -17px; }
 }
 
+@media (width < 600px) {
+  .mobile-header { height: min(11.5vw, 60px); padding-inline: min(5vw, 24px); }
+  .menu-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: min(1.5vw, 6px);
+    width: auto;
+    height: 100%;
+    aspect-ratio: 1;
+    padding: 0;
+  }
+  .menu-button span { width: min(8.2vw, 40px); height: min(.77vw, 3px); margin: 0; }
+  .mobile-nav { top: 100%; padding: 3vw 5vw 5vw; font-size: clamp(.875rem, 4.1vw, 1rem); }
+}
+
 /* Reference tablet layout: top navigation and two illustrated timeline rows. */
-@media (min-width: 700px) and (max-width: 1000px) {
+@media (min-width: 600px) and (max-width: 1000px) {
   :root { scroll-padding-top: 84px; }
   .mobile-header { display: none; }
   .sidebar {
@@ -1020,4 +1205,88 @@ main { margin-left: 145px; padding: 8px; max-width: 1440px; }
   }
   .experience .job-detail svg { width: 26px; height: 26px; }
   .experience .job-detail:hover { background: var(--yellow); }
+}
+
+/* About Me reference design applies only below 600px. */
+@media (width < 600px) {
+  .about {
+    container-type: inline-size;
+    isolation: isolate;
+    align-self: start;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+  .about-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(135deg, transparent 0%, var(--paper) 75%),
+      url("/src/assets/experience-sky.svg");
+    background-size: 100% 110px;
+    background-repeat: no-repeat;
+    clip-path: url("#about-mobile-frame-clip");
+  }
+  .about-comic-border { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 8; overflow: visible; pointer-events: none; }
+  .about-border-main, .about-border-sketch { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .about-border-main { stroke-width: 3.5; }
+  .about-border-sketch { stroke-width: .8; opacity: .55; }
+  .about-comic-border clipPath path { fill: #000; stroke: none; }
+  .about .section-heading { position: relative; z-index: 2; margin: 5px 0 0 8px; }
+  .about .section-heading h2.hand-drawn-title {
+    min-width: 0;
+    padding: 20px 24px 18px;
+    font-size: clamp(1.65rem, 7.5cqw, 2rem);
+  }
+  .about-body { position: relative; order: 2; min-height: 0; margin: 0; padding: 9px 8% 22px; }
+  .about-body p {
+    position: static;
+    display: block;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    font-family: "Comic Neue", cursive;
+    font-style: normal;
+    font-size: clamp(1rem, 5cqw, 1.25rem);
+    line-height: 1.28;
+  }
+  .about-artwork {
+    position: relative;
+    inset: auto;
+    order: 3;
+    width: 100%;
+    aspect-ratio: 1.25;
+    margin: 0;
+    overflow: hidden;
+    clip-path: polygon(0 7%, 100% 0, 100% 100%, 0 100%);
+  }
+  .about-artwork::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    clip-path: polygon(0 7%, 100% 0, 100% 3px, 0 calc(7% + 3px));
+    pointer-events: none;
+  }
+  .about-artwork img { position: static; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .about .section-heading { order: 1; }
+  .about-body p::before, .about-text-border, .about-copy-default,
+  .about-border-main, .about-border-sketch { display: none; }
+  .about-copy-mobile { display: inline; }
+  .about-border-mobile {
+    display: block;
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 3.5;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
 }
