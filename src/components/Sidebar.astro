@@ -8,7 +8,12 @@ const links = [
 ---
 
 <aside class="sidebar" aria-label="Main navigation">
-  <div class="sidebar-brand-space" aria-hidden="true"></div>
+  <div class="sidebar-brand-space" aria-hidden="true">
+    <svg class="tablet-brand" viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+      <path d="M3 53 23 23 29 32 39 9 53 33 59 23 77 53 53 42 43 33 34 44 24 39 Z" />
+      <path d="m3 53 25-19 9-15 8 18 8-4 24 20M15 43l8-20m30 19 6-19M24 39l-6 12 16-7 9-11 14 19" />
+    </svg>
+  </div>
   <nav>
     {links.map(([id, label, icon]) => (
       <a href={`#${id}`}>

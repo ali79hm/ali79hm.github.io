@@ -24,19 +24,27 @@ const base = import.meta.env.BASE_URL;
   <main>
     <section class="panel hero" id="home">
       <div class="hero-artwork">
-        <img
-          class="hero-image"
-          src={`${base}hero/hero.jpeg`}
-          alt="Seyed Ali Hosseini at his AI development workstation overlooking Tehran"
-        />
+        <picture>
+          <source media="(width < 600px)" srcset={`${base}hero/hero-mobile.jpeg`} />
+          <source media="(min-width: 600px) and (max-width: 750px)" srcset={`${base}hero/hero-min.jpeg`} />
+          <img
+            class="hero-image"
+            src={`${base}hero/hero.jpeg`}
+            alt="Seyed Ali Hosseini at his AI development workstation overlooking Tehran"
+          />
+        </picture>
       </div>
       <div class="hero-copy">
-        <p class="eyebrow">Hi, I’m</p>
-        <h1></h1>
-        <h1>
-          <span class="name-line name-line-first">Seyed Ali</span>
-          <span class="name-line name-line-second">Hosseini</span>
-        </h1>
+        <div class="hero-intro">
+          <svg class="hero-name-bubble" viewBox="0 0 650 500" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M35 62 C75 15 240 8 360 12 C490 10 601 18 622 68 C644 116 638 267 615 316 C596 357 477 369 374 375 L310 490 L309 382 C196 397 73 397 39 365 C8 337 8 117 35 62 Z" />
+          </svg>
+          <p class="eyebrow">Hi, I’m</p>
+          <h1>
+            <span class="name-line name-line-first">Seyed Ali</span>
+            <span class="name-line name-line-second">Hosseini</span>
+          </h1>
+        </div>
         <div class="speech">
           I build AI solutions that turn complex problems into real-world impact.
           <svg class="speech-tail" viewBox="0 0 44 38" aria-hidden="true">
@@ -71,12 +79,16 @@ const base = import.meta.env.BASE_URL;
       <section class="panel about" id="about">
         <div class="about-inner">
           <div class="about-artwork">
-            <img src={`${base}about/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
+            <picture>
+              <source media="(width < 600px)" srcset={`${base}about/tehran-mobile.png`} />
+              <img src={`${base}about/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
+            </picture>
           </div>
           <SectionTitle label="About me" handDrawn />
           <div class="about-body">
             <p>
-              Senior AI Engineer and Tech Lead with 4+ years of experience architecting and scaling enterprise AI systems. I bridge high-level technical strategy and hands-on implementation, mentor engineers, and deliver robust AI products.
+              <span class="about-copy-default">Senior AI Engineer and Tech Lead with 4+ years of experience architecting and scaling enterprise AI systems. I bridge high-level technical strategy and hands-on implementation, mentor engineers, and deliver robust AI products.</span>
+              <span class="about-copy-mobile">Senior AI Engineer and Tech Lead with 4+ years of experience architecting and scaling enterprise AI systems. Proven expertise in applied machine learning, deep learning, LLM inference optimization, and backend development. Adept at bridging the gap between high-level technical strategy and hands-on implementation, with a strong track record of mentoring engineers and delivering robust AI solutions.</span>
               <svg class="about-text-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
                   <clipPath id="about-card-clip" clipPathUnits="objectBoundingBox">
@@ -91,10 +103,14 @@ const base = import.meta.env.BASE_URL;
         </div>
         <svg class="about-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
           <defs>
+            <clipPath id="about-mobile-frame-clip" clipPathUnits="objectBoundingBox">
+              <path d="M.006 .009 H.994 V.991 H.006 Z" />
+            </clipPath>
             <clipPath id="about-frame-clip" clipPathUnits="objectBoundingBox">
               <path d="M.005 .0175 C.17 .005 .33 .0225 .5 .0125 S.825 .0075 .994 .0175 C.997 .2625 .991 .5125 .995 .75 S.997 .9125 .993 .9825 C.82 .995 .665 .975 .5 .9875 S.17 .9975 .006 .9825 C.002 .75 .008 .5125 .004 .275 S.002 .105 .005 .0175 Z" />
             </clipPath>
           </defs>
+          <path class="about-border-mobile" d="M6 3.6 H994 V396.4 H6 Z" />
           <path class="about-border-main" d="M5 7 C170 2 330 9 500 5 S825 3 994 7 C997 105 991 205 995 300 S997 365 993 393 C820 398 665 390 500 395 S170 399 6 393 C2 300 8 205 4 110 S2 42 5 7 Z" />
           <path class="about-border-sketch" d="M7 9 C185 5 345 11 505 7 S820 5 992 9 C994 115 989 210 993 302 S995 362 991 391 C815 395 650 389 495 393 S175 396 8 391 C5 295 10 200 6 108 S5 45 7 9 Z" />
         </svg>
@@ -115,6 +131,21 @@ const base = import.meta.env.BASE_URL;
             </article>
           ))}
         </div>
+        <svg class="skills-tablet-segments" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+          <path class="segment-fill coral-fill" d="M0 0 H224 C216 92 207 184 194 274 C187 322 180 363 174 400 H0 Z" />
+          <path class="segment-fill blue-fill" d="M224 0 H424 C414 82 405 174 394 263 C388 312 381 359 374 400 H174 C180 363 187 322 194 274 C207 184 216 92 224 0 Z" />
+          <path class="segment-fill purple-fill" d="M424 0 H624 C613 89 604 180 594 269 C588 317 581 360 574 400 H374 C381 359 388 312 394 263 C405 174 414 82 424 0 Z" />
+          <path class="segment-fill green-fill" d="M624 0 H824 C815 88 806 177 794 266 C788 315 781 359 774 400 H574 C581 360 588 317 594 269 C604 180 613 89 624 0 Z" />
+          <path class="segment-fill yellow-fill" d="M824 0 H1000 V400 H774 C781 359 788 315 794 266 C806 177 815 88 824 0 Z" />
+          <path class="segment-divider" d="M224 0 C217 86 209 177 195 270 C188 319 181 362 174 400" />
+          <path class="segment-divider segment-divider-sketch" d="M226 0 C218 91 211 181 197 272 C190 321 182 364 176 400" />
+          <path class="segment-divider" d="M424 0 C415 82 406 174 395 263 C389 311 381 358 374 400" />
+          <path class="segment-divider segment-divider-sketch" d="M426 0 C417 85 408 177 397 265 C391 314 383 360 376 400" />
+          <path class="segment-divider" d="M624 0 C614 88 605 179 595 269 C589 316 581 359 574 400" />
+          <path class="segment-divider segment-divider-sketch" d="M626 0 C616 91 607 182 597 271 C591 318 583 362 576 400" />
+          <path class="segment-divider" d="M824 0 C816 87 807 176 795 266 C789 314 781 358 774 400" />
+          <path class="segment-divider segment-divider-sketch" d="M826 0 C818 90 809 179 797 268 C791 317 783 361 776 400" />
+        </svg>
         <svg class="skills-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <clipPath id="skills-frame-clip" clipPathUnits="objectBoundingBox">
@@ -128,19 +159,23 @@ const base = import.meta.env.BASE_URL;
     </div>
 
     <section class="panel experience" id="experience">
-      <SectionTitle label="Experience" />
+      <SectionTitle label="Experience" note="Scroll to see my journey" tabletNote="My journey" />
       <div class="experience-carousel" data-active="0">
         <div class="experience-slides">
           {jobs.map((job, index) => (
+          <div class="experience-entry">
+          <span class="job-timeline-marker" aria-hidden="true"></span>
           <article class="job-card" data-job={index} aria-hidden={index === 0 ? "false" : "true"}>
             {index === 0 ? (
               <picture>
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp1/exp1.png`} />
                 <source media="(min-width: 1401px)" srcset={`${base}experience/exp1-1400.png`} />
                 <source media="(min-width: 1250px)" srcset={`${base}experience/exp1-1250.png`} />
                 <img class="job-image" src={`${base}experience/exp1.png`} alt="" />
               </picture>
             ) : (
               <picture>
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp2/exp2.png`} />
                 <source media="(min-width: 1250px)" srcset={`${base}experience/exp2-1250.png`} />
                 <img class="job-image" src={`${base}experience/${job.image}`} alt="" />
               </picture>
@@ -151,6 +186,7 @@ const base = import.meta.env.BASE_URL;
               <a class="button job-detail" href={`${base}expeience${index + 1}`}>View details <Icon name="arrow" size={17} /></a>
             </div>
           </article>
+          </div>
           ))}
         </div>
         <button class="experience-arrow experience-prev" type="button" aria-label="Show previous experience">
@@ -161,6 +197,15 @@ const base = import.meta.env.BASE_URL;
         </button>
         <div class="experience-count" aria-live="polite"><strong>01</strong><span>/ 02</span></div>
       </div>
+      <svg class="experience-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <clipPath id="experience-frame-clip" clipPathUnits="objectBoundingBox">
+            <path d="M.006 .015 C.17 .0075 .335 .0225 .5 .0125 S.825 .01 .994 .0175 C.996 .2625 .992 .5125 .995 .75 S.996 .9125 .993 .985 C.82 .9925 .665 .98 .5 .99 S.17 .9925 .007 .9825 C.004 .75 .008 .5125 .005 .275 S.004 .105 .006 .015 Z" />
+          </clipPath>
+        </defs>
+        <path class="experience-border-main" d="M6 6 C170 3 335 9 500 5 S825 4 994 7 C996 105 992 205 995 300 S996 365 993 394 C820 397 665 392 500 396 S170 397 7 393 C4 300 8 205 5 110 S4 42 6 6 Z" />
+        <path class="experience-border-sketch" d="M8 8 C176 5 340 11 505 7 S820 6 992 9 C994 110 990 201 993 303 S994 361 991 391 C815 395 660 390 495 394 S175 395 9 391 C6 296 10 201 7 107 S6 46 8 8 Z" />
+      </svg>
     </section>
 
     <div class="lower-grid">
@@ -224,19 +269,22 @@ const base = import.meta.env.BASE_URL;
     if (carousel) {
       const cards = [...carousel.querySelectorAll<HTMLElement>(".job-card")];
       const counter = carousel.querySelector<HTMLElement>(".experience-count strong");
+      const stackedExperience = window.matchMedia("(max-width: 1000px)");
       const show = (index: number) => {
         const active = (index + cards.length) % cards.length;
         carousel.dataset.active = String(active);
-        cards.forEach((card, i) => card.setAttribute("aria-hidden", String(i !== active)));
+        cards.forEach((card, i) => card.setAttribute("aria-hidden", String(!stackedExperience.matches && i !== active)));
         if (counter) counter.textContent = String(active + 1).padStart(2, "0");
       };
       carousel.querySelector(".experience-next")?.addEventListener("click", () => show(Number(carousel.dataset.active) + 1));
       carousel.querySelector(".experience-prev")?.addEventListener("click", () => show(Number(carousel.dataset.active) - 1));
       cards.forEach((card, index) => {
         card.addEventListener("click", () => {
-          if (card.getAttribute("aria-hidden") === "true") show(index);
+          if (!stackedExperience.matches && card.getAttribute("aria-hidden") === "true") show(index);
         });
       });
+      stackedExperience.addEventListener("change", () => show(Number(carousel.dataset.active)));
+      show(Number(carousel.dataset.active));
     }
   </script>
 </BaseLayout>
