@@ -1,13 +1,16 @@
 ---
 import Icon from "./Icon.astro";
 const links = [
-  ["home", "Home", "home"], ["about", "About", "person"], ["skills", "Skills", "skills"],
-  ["experience", "Experience", "work"], ["projects", "Projects", "projects"],
+  ["home", "Home", "home"], ["about", "About Me", "person"], ["skills", "Skills", "skills"],
+  ["experience", "Experiences", "work"], ["projects", "Projects", "projects"],
   ["education", "Education", "education"],
 ] as const;
 ---
 
 <aside class="sidebar" aria-label="Main navigation">
+  <button class="tablet-menu-button" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <div class="sidebar-brand-space" aria-hidden="true">
     <svg class="tablet-brand" viewBox="0 0 80 60" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
       <path d="M3 53 23 23 29 32 39 9 53 33 59 23 77 53 53 42 43 33 34 44 24 39 Z" />
@@ -21,6 +24,9 @@ const links = [
       </a>
     ))}
   </nav>
+  <a class="resume-nav-link" href="/resume/seyed_ali_hosseini_mirzaee_resume.pdf" download>
+    <Icon name="download" size={18} /><span>Download Resume</span>
+  </a>
 </aside>
 
 <header class="mobile-header">
@@ -29,21 +35,25 @@ const links = [
   </button>
   <nav class="mobile-nav" aria-label="Mobile navigation">
     {links.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+    <a class="resume-link" href="/resume/seyed_ali_hosseini_mirzaee_resume.pdf" download>Download Resume</a>
   </nav>
 </header>
 
 <script>
-  const button = document.querySelector<HTMLButtonElement>(".menu-button");
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".menu-button, .tablet-menu-button");
+  const sidebar = document.querySelector<HTMLElement>(".sidebar");
   const nav = document.querySelector<HTMLElement>(".mobile-nav");
   const closeMenu = () => {
-    button?.setAttribute("aria-expanded", "false");
+    buttons.forEach((button) => button.setAttribute("aria-expanded", "false"));
+    sidebar?.classList.remove("drawer-open");
     nav?.classList.remove("open");
   };
-  button?.addEventListener("click", () => {
+  buttons.forEach((button) => button.addEventListener("click", () => {
     const isOpen = button.getAttribute("aria-expanded") === "true";
-    button.setAttribute("aria-expanded", String(!isOpen));
+    buttons.forEach((menuButton) => menuButton.setAttribute("aria-expanded", String(!isOpen)));
+    sidebar?.classList.toggle("drawer-open", !isOpen);
     nav?.classList.toggle("open", !isOpen);
-  });
+  }));
   nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
 
   const sectionLinks = Array.from(
@@ -59,7 +69,7 @@ const links = [
   let manuallySelectedId: string | null = getRequestedSection();
 
   const setActiveSection = (id: string) => {
-    sectionLinks.forEach((link) => {
+    document.querySelectorAll<HTMLAnchorElement>('.sidebar nav a[href^="#"], .mobile-nav a[href^="#"]').forEach((link) => {
       const isActive = link.hash === "#" + id;
       link.classList.toggle("active", isActive);
       if (isActive) link.setAttribute("aria-current", "location");
