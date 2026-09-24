@@ -25,11 +25,11 @@ const base = import.meta.env.BASE_URL;
     <section class="panel hero" id="home">
       <div class="hero-artwork">
         <picture>
-          <source media="(width < 600px)" srcset={`${base}hero/hero-mobile.jpeg`} />
-          <source media="(min-width: 600px) and (max-width: 750px)" srcset={`${base}hero/hero-min.jpeg`} />
+          <source media="(width < 600px)" srcset={`${base}hero/mobile/hero.jpeg`} />
+          <source media="(min-width: 600px) and (max-width: 750px)" srcset={`${base}hero/normal/hero.jpeg`} />
           <img
             class="hero-image"
-            src={`${base}hero/hero.jpeg`}
+            src={`${base}hero/wide/hero.jpeg`}
             alt="Seyed Ali Hosseini at his AI development workstation overlooking Tehran"
           />
         </picture>
@@ -62,6 +62,9 @@ const base = import.meta.env.BASE_URL;
           <div class="contact-line"><img class="linkedin-icon" src={`${base}svgs/linkedin.svg`} alt="" /> <a href="https://linkedin.com/in/ali79hm">linkedin.com/in/ali79hm</a></div>
           <div class="contact-line"><img src={`${base}svgs/github.svg`} alt="" /> <a href="https://github.com/ali79hm">github.com/ali79hm</a></div>
         </div>
+        <a class="mobile-resume-button" href="/resume/seyed_ali_hosseini_mirzaee_resume.pdf" download>
+          <Icon name="download" size={22} /><span>Download Resume</span>
+        </a>
         <a class="button hero-button" href="#about">Explore my story <Icon name="arrow" size={18} /></a>
       </div>
       <svg class="hero-comic-border" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
@@ -80,8 +83,8 @@ const base = import.meta.env.BASE_URL;
         <div class="about-inner">
           <div class="about-artwork">
             <picture>
-              <source media="(width < 600px)" srcset={`${base}about/tehran-mobile.png`} />
-              <img src={`${base}about/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
+              <source media="(width < 600px)" srcset={`${base}about/mobile/tehran.png`} />
+              <img src={`${base}about/normal/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
             </picture>
           </div>
           <SectionTitle label="About me" handDrawn />
@@ -168,16 +171,16 @@ const base = import.meta.env.BASE_URL;
           <article class="job-card" data-job={index} aria-hidden={index === 0 ? "false" : "true"}>
             {index === 0 ? (
               <picture>
-                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp1/exp1.png`} />
-                <source media="(min-width: 1401px)" srcset={`${base}experience/exp1-1400.png`} />
-                <source media="(min-width: 1250px)" srcset={`${base}experience/exp1-1250.png`} />
-                <img class="job-image" src={`${base}experience/exp1.png`} alt="" />
+                <source media="(max-width: 600px)" srcset={`${base}experience/exp1/mobile/exp1.png`} />
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp1/wide/exp1.png`} />
+                <source media="(min-width: 1250px)" srcset={`${base}experience/exp1/wide/exp1.png`} />
+                <img class="job-image" src={`${base}experience/exp1/normal/exp1.png`} alt="" />
               </picture>
             ) : (
               <picture>
-                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp2/exp2.png`} />
-                <source media="(min-width: 1250px)" srcset={`${base}experience/exp2-1250.png`} />
-                <img class="job-image" src={`${base}experience/${job.image}`} alt="" />
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp2/tablet/exp2.png`} />
+                <source media="(min-width: 1250px)" srcset={`${base}experience/exp2/wide/exp2.png`} />
+                <img class="job-image" src={`${base}experience/exp2/normal/exp2.png`} alt="" />
               </picture>
             )}
             <div class="job-copy">
