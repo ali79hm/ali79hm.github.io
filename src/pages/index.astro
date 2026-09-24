@@ -13,8 +13,8 @@ const skills = [
 ];
 
 const jobs = [
-  { role: "Technical Lead", company: "Roshan", date: "Mar 2025 — Present", image: "exp1.png", points: ["Lead AI teams", "Architect LLM inference pipelines", "Build real-time voice AI", "Deliver enterprise RAG systems"] },
-  { role: "AI Engineer", company: "Roshan", date: "Jul 2022 — Mar 2025", image: "exp2.png", points: ["Develop Persian OCR", "Train deep-learning models", "Analyze document layouts", "Accelerate inference"] },
+  { role: "Technical Lead", company: "Roshan", date: "Mar 2025 — Present", image: "exp1.jpg", points: ["Lead AI teams", "Architect LLM inference pipelines", "Build real-time voice AI", "Deliver enterprise RAG systems"] },
+  { role: "AI Engineer", company: "Roshan", date: "Jul 2022 — Mar 2025", image: "exp2.jpg", points: ["Develop Persian OCR", "Train deep-learning models", "Analyze document layouts", "Accelerate inference"] },
 ];
 const base = import.meta.env.BASE_URL;
 ---
@@ -83,8 +83,8 @@ const base = import.meta.env.BASE_URL;
         <div class="about-inner">
           <div class="about-artwork">
             <picture>
-              <source media="(width < 600px)" srcset={`${base}about/mobile/tehran.png`} />
-              <img src={`${base}about/normal/tehran.png`} alt="Ali looking over the Tehran skyline at sunset" />
+              <source media="(width < 600px)" srcset={`${base}about/mobile/tehran.jpg`} />
+              <img src={`${base}about/normal/tehran.jpg`} alt="Ali looking over the Tehran skyline at sunset" />
             </picture>
           </div>
           <SectionTitle label="About me" handDrawn />
@@ -171,16 +171,16 @@ const base = import.meta.env.BASE_URL;
           <article class="job-card" data-job={index} aria-hidden={index === 0 ? "false" : "true"}>
             {index === 0 ? (
               <picture>
-                <source media="(max-width: 600px)" srcset={`${base}experience/exp1/mobile/exp1.png`} />
-                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp1/wide/exp1.png`} />
-                <source media="(min-width: 1250px)" srcset={`${base}experience/exp1/wide/exp1.png`} />
-                <img class="job-image" src={`${base}experience/exp1/normal/exp1.png`} alt="" />
+                <source media="(max-width: 600px)" srcset={`${base}experience/exp1/mobile/exp1.jpg`} />
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp1/wide/exp1.jpg`} />
+                <source media="(min-width: 1250px)" srcset={`${base}experience/exp1/wide/exp1.jpg`} />
+                <img class="job-image" src={`${base}experience/exp1/normal/exp1.jpg`} alt="" />
               </picture>
             ) : (
               <picture>
-                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp2/tablet/exp2.png`} />
-                <source media="(min-width: 1250px)" srcset={`${base}experience/exp2/wide/exp2.png`} />
-                <img class="job-image" src={`${base}experience/exp2/normal/exp2.png`} alt="" />
+                <source media="(min-width: 600px) and (max-width: 1000px)" srcset={`${base}experience/exp2/tablet/exp2.jpg`} />
+                <source media="(min-width: 1250px)" srcset={`${base}experience/exp2/wide/exp2.jpg`} />
+                <img class="job-image" src={`${base}experience/exp2/normal/exp2.jpg`} alt="" />
               </picture>
             )}
             <div class="job-copy">
@@ -215,7 +215,7 @@ const base = import.meta.env.BASE_URL;
       <section class="panel project" id="projects">
         <img
           class="project-image"
-          src={`${base}projetcs/pro1.png`}
+          src={`${base}projetcs/pro1.jpg`}
           alt="Jalali Calendar Widget running on a KDE Plasma desktop"
         />
         <SectionTitle label="Projects" />
@@ -241,7 +241,7 @@ const base = import.meta.env.BASE_URL;
       <section class="panel education" id="education">
         <img
           class="education-background"
-          src={`${base}education/back1.png`}
+          src={`${base}education/back1.jpg`}
           alt=""
           aria-hidden="true"
         />
@@ -263,7 +263,7 @@ const base = import.meta.env.BASE_URL;
         </svg>
       </section>
       <section class="panel contact" id="contact">
-        <img class="contact-art" src={`${base}filler/filler1.png`} alt="" loading="lazy" />
+        <img class="contact-art" src={`${base}filler/filler1.jpg`} alt="" loading="lazy" />
       </section>
     </div>
   </main>
